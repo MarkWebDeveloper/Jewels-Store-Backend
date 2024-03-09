@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import dev.mark.jewelsstorebackend.interfaces.IGenericFullService;
 import dev.mark.jewelsstorebackend.messages.Message;
 
 @Service
-public class ProductService {
+public class ProductService implements IGenericFullService<Product, ProductDTO> {
 
     ProductRepository repository;
     

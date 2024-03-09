@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Product> findById(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<Product> findById(@PathVariable("id") @NonNull Long id) throws Exception {
 
         Product ticket = service.getById(id);
 
@@ -49,7 +50,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable("id") Long id, @RequestBody ProductDTO ticket) throws Exception {
+    public ResponseEntity<Product> update(@PathVariable("id") @NonNull Long id, @RequestBody ProductDTO ticket) throws Exception {
 
         Product updatedProduct = service.update(id, ticket);
 
@@ -57,7 +58,7 @@ public class ProductController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Message> remove(@PathVariable("id") Long id) throws Exception { 
+    public ResponseEntity<Message> remove(@PathVariable("id") @NonNull Long id) throws Exception { 
 
         Message delete = service.delete(id);
 
