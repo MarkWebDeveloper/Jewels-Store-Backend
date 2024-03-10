@@ -34,7 +34,7 @@ public class ProductService implements IGenericFullService<Product, ProductDTO> 
         Product newProduct = Product.builder()
             .productName(product.productName)
             .description(product.description)
-            .image(product.image)
+            .productImage(product.image)
             .price(product.price)
             .build();
 
@@ -49,7 +49,7 @@ public class ProductService implements IGenericFullService<Product, ProductDTO> 
         
         updatingProduct.setProductName(product.productName);
         updatingProduct.setDescription(product.description);
-        updatingProduct.setImage(product.image);
+        updatingProduct.setProductImage(product.image);
         updatingProduct.setPrice(product.price);
 
         Product updatedProduct = repository.save(updatingProduct);
