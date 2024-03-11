@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 src/main/resources/application.properties
 src/main/resources/application-mysql.properties
+src/main/resources/application-h2.properties
 src/main/resources/data.sql
 
 ### STS ###
