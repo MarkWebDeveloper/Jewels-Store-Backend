@@ -1,5 +1,6 @@
 package dev.mark.jewelsstorebackend.products;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,17 +8,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import dev.mark.jewelsstorebackend.messages.Message;
+
 @RestController
 @RequestMapping(path = "${api-endpoint}")
 public class ProductImageController {
 
-    ProductImageStorageService service;
+    @Autowired
+    private ProductImageStorageService service;
 
     @PostMapping(path = "/images")
     ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
 
         service.storeFile(file);
 
-        return ResponseEntity.status(201).body("Saved image");
+        return ResponseEntity.status(201).body("File with the name " + file.getOriginalFilename() + " is successfully uploaded");
     }
 }

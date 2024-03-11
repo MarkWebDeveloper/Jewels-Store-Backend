@@ -22,6 +22,9 @@ public class ProductImageStorageService {
         Path path = Paths.get(uploadDir, fileName);
         
         try (InputStream inputStream = file.getInputStream()) {
+            if (file.isEmpty()) {
+				throw new StorageException("Failed to store empty file.");
+			}
             Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeErrorException(null, "File" + fileName + "has not been saved");
