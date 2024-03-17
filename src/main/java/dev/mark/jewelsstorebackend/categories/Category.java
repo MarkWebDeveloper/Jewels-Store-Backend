@@ -4,13 +4,16 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import dev.mark.jewelsstorebackend.images.Image;
 import dev.mark.jewelsstorebackend.products.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +37,10 @@ public class Category {
 
     @Column(name = "category_name")
     private String categoryName;
+
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id_image")
+    private Image image;
 
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
