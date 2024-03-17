@@ -3,6 +3,7 @@ package dev.mark.jewelsstorebackend.products;
 import java.util.Set;
 
 import dev.mark.jewelsstorebackend.categories.Category;
+import dev.mark.jewelsstorebackend.images.Image;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,21 +31,21 @@ import lombok.Setter;
 public class Product {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    @Column(name = "id_country")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_product")
     private Long id;
 
     @Column(name = "product_name")
     private String productName;
 
-    @Column
-    private String description;
+    @Column(name = "product_description")
+    private String productDescription;
 
-    @Column(name = "product_image")
-    private String productImage;
+    @OneToMany(mappedBy = "product")
+    private Set<Image> images;
 
     @Column
-    private Long price;
+    private float price;
 
     @Column
     @ManyToMany(fetch = FetchType.EAGER)

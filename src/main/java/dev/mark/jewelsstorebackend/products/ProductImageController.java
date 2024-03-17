@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.mark.jewelsstorebackend.messages.Message;
-
 @RestController
 @RequestMapping(path = "${api-endpoint}")
 public class ProductImageController {
