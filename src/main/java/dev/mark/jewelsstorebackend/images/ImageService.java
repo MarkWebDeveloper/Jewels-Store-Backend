@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +33,6 @@ public class ImageService implements IStorageService {
     ProductRepository productRepository;
     Time time;
     private final Path rootLocation;
-    private final String uploadDir = "src/main/resources/static/images/";
 
     public ImageService(ImageRepository imageRepository, ProductRepository productRepository, Time time, StorageProperties properties) {
         if(properties.getLocation().trim().length() == 0){
@@ -45,13 +45,12 @@ public class ImageService implements IStorageService {
         this.time = time;
     }
 
-    @Override
     public String save(@NonNull Long productId, MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String baseName = fileName.substring(0, fileName.lastIndexOf("."));
         String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
         String combinedName = MessageFormat.format("{0}-{1}.{2}", baseName, time.checkCurrentTime(), fileExtension);
-        Path path = Paths.get(uploadDir, combinedName);
+        Path path2 = load(combinedName);
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
@@ -67,7 +66,7 @@ public class ImageService implements IStorageService {
             if (combinedName.contains("MainImage")) {
                 newImage.setMainImage(true);
             }
-            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(inputStream, path2, StandardCopyOption.REPLACE_EXISTING);
             imageRepository.save(newImage);
         } catch (IOException e) {
             throw new RuntimeErrorException(null, "File" + combinedName + "has not been saved");
@@ -98,6 +97,21 @@ public class ImageService implements IStorageService {
 		catch (MalformedURLException e) {
 			throw new StorageFileNotFoundException("Could not read file: " + filename, e);
 		}
+	}
+
+    @Override
+	public void init() {
+		try {
+			Files.createDirectories(rootLocation);
+		}
+		catch (IOException e) {
+			throw new StorageException("Could not initialize storage", e);
+		}
+	}
+
+    @Override
+	public void deleteAll() {
+		FileSystemUtils.deleteRecursively(rootLocation.toFile());
 	}
 
     public Image markImageAsMain(Image image) {
