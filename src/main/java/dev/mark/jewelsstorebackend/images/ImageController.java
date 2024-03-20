@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import dev.mark.jewelsstorebackend.interfaces.IStorageService;
 import dev.mark.jewelsstorebackend.messages.ResponseMessage;
 
 @RestController
@@ -26,22 +27,26 @@ import dev.mark.jewelsstorebackend.messages.ResponseMessage;
 public class ImageController {
 
     @Autowired
-    private ImageService service;
+    IStorageService service;
 
     @PostMapping(path = "/images/uploadImages/{id}")
-    ResponseEntity<ResponseMessage> uploadImages(@PathVariable("id") @NonNull Long id, @RequestParam("files") MultipartFile[] files) {
+    ResponseEntity<ResponseMessage> uploadImages(@PathVariable("id") @NonNull Long id, @RequestParam("file") MultipartFile file, @RequestParam("files") MultipartFile[] files) {
 
         String message = "";
 
         try {
+            String mainFilename = new String();
             List<String> fileNames = new ArrayList<>();
 
-            Arrays.asList(files).stream().forEach(file -> {
-                service.save(id, file);
-                fileNames.add(file.getOriginalFilename());
+            service.saveMainImage(id, file);
+            mainFilename = file.getOriginalFilename();
+
+            service.saveImages(id, files);
+            Arrays.asList(files).stream().forEach(image -> {
+                fileNames.add(image.getOriginalFilename());
             });
 
-            message = "File with the names " + fileNames + " are uploaded successfully: ";
+            message = "File with the name " + mainFilename + " and files " + fileNames + " are uploaded successfully: ";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
             message = "Fail to upload files!";
