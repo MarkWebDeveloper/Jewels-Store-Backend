@@ -4,6 +4,7 @@ import java.util.Set;
 
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.images.Image;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,7 +42,7 @@ public class Product {
     @Column(name = "product_description")
     private String productDescription;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Image> images;
 
     @Column
