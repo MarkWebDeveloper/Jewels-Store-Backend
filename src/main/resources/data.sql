@@ -1,10 +1,10 @@
 /*Categories*/
 
 INSERT INTO categories (id_category, category_name) VALUES (default, 'Earrings');
-INSERT INTO categories (id_category, category_name) VALUES (default, 'Necklace & Earrings Set');
-INSERT INTO categories (id_category, category_name) VALUES (default, 'Studs');
 INSERT INTO categories (id_category, category_name) VALUES (default, 'Necklaces');
+INSERT INTO categories (id_category, category_name) VALUES (default, 'Necklace & Earrings Set');
 INSERT INTO categories (id_category, category_name) VALUES (default, 'Ring & Earrings Set');
+INSERT INTO categories (id_category, category_name) VALUES (default, 'Studs');
 
 /*Products*/
 
@@ -17,15 +17,15 @@ INSERT INTO products (id_product, product_name, product_description, price) VALU
 
 /*Proucts images*/
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 1);
-INSERT INTO images (id_image, image_name, is_main_image, product_id, category_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 2, 1);
-INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'esmeralda-earrings.png', true, 3);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 2);
+INSERT INTO images (id_image, image_name, is_main_image, product_id, category_id) VALUES (default, 'esmeralda-earrings.png', true, 3, 1);
 
 /*Categories images*/
 
-INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'necklace-and-earrings-category.png', true, 2);
-INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'studs-category.png', true, 3);
-INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'necklace-category.png', true, 4);
-INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'ring-and-earrings-category.png', true, 5);
+INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'necklace-and-earrings-category.png', true, 3);
+INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'studs-category.png', true, 5);
+INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'blue-necklace.png', true, 2);
+INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'ring-and-earrings-category.png', true, 4);
 
 /*Categories-Products*/
 
