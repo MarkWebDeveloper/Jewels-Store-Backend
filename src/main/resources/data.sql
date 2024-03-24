@@ -15,6 +15,10 @@ INSERT INTO products (id_product, product_name, product_description, price) VALU
 
 /*Images*/
 
+/*Placeholder image*/
+
+INSERT INTO images (id_image, image_name, is_main_image) VALUES (default, 'placeholder-image.jpg', true);
+
 /*Proucts images*/
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 1);
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 2);
