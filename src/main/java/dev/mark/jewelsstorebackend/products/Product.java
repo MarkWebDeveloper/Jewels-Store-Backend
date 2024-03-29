@@ -46,7 +46,7 @@ public class Product {
     private Set<Image> images;
 
     @Column
-    private float price;
+    private Long price;
 
     @Column
     @ManyToMany(fetch = FetchType.EAGER)
