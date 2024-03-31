@@ -1,6 +1,5 @@
 package dev.mark.jewelsstorebackend.stripe;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
