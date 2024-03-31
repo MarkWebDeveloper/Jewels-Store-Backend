@@ -36,23 +36,31 @@ public class ProductController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Product> findById(@PathVariable("id") @NonNull Long id) throws Exception {
 
-        Product ticket = service.getById(id);
+        Product product = service.getById(id);
 
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(ticket);
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
+    }
+
+    @GetMapping(path = "getByName/{name}")
+    public ResponseEntity<Product> findById(@PathVariable("name") @NonNull String name) throws Exception {
+
+        Product product = service.getByName(name);
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<Product> create(@RequestBody ProductDTO ticket) {
+    public ResponseEntity<Product> create(@RequestBody ProductDTO product) {
 
-        Product newProduct = service.save(ticket);
+        Product newProduct = service.save(product);
 
         return ResponseEntity.status(201).body(newProduct);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable("id") @NonNull Long id, @RequestBody ProductDTO ticket) throws Exception {
+    public ResponseEntity<Product> update(@PathVariable("id") @NonNull Long id, @RequestBody ProductDTO product) throws Exception {
 
-        Product updatedProduct = service.update(id, ticket);
+        Product updatedProduct = service.update(id, product);
 
         return ResponseEntity.status(200).body(updatedProduct);
     }
