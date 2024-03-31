@@ -1,3 +1,4 @@
+package dev.mark.jewelsstorebackend.stripe.baeldung;
 // package dev.mark.jewelsstorebackend.stripe;
 
 // import org.springframework.beans.factory.annotation.Autowired;

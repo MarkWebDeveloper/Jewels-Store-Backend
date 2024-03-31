@@ -13,40 +13,46 @@ import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 
+import dev.mark.jewelsstorebackend.products.ProductDTO;
+
 public class Server {
   private static Gson gson = new Gson();
 
-  static class CreatePaymentItem {
-    @SerializedName("id")
-    String id;
+  // static class CreatePaymentItem {
+  //   @SerializedName("id")
+  //   String id;
 
-    public String getId() {
-      return id;
-    }
-  }
+  //   public String getId() {
+  //     return id;
+  //   }
+  // }
 
-  static class CreatePayment {
-    @SerializedName("items")
-    CreatePaymentItem[] items;
+  // static class CreatePayment {
+  //   @SerializedName("items")
+  //   CreatePaymentItem[] items;
 
-    public CreatePaymentItem[] getItems() {
-      return items;
-    }
-  }
+  //   public CreatePaymentItem[] getItems() {
+  //     return items;
+  //   }
+  // }
 
-  static class CreatePaymentResponse {
-    private String clientSecret;
-    public CreatePaymentResponse(String clientSecret) {
-      this.clientSecret = clientSecret;
-    }
-  }
+  // static class CreatePaymentResponse {
+  //   private String clientSecret;
+  //   public CreatePaymentResponse(String clientSecret) {
+  //     this.clientSecret = clientSecret;
+  //   }
+  // }
 
-  static Long calculateOrderAmount(Object[] items) {
-    // Replace this constant with a calculation of the order's amount
-    // Calculate the order total on the server to prevent
-    // people from directly manipulating the amount on the client
-    return (long) 1400;
-  }
+  // static Long calculateOrderAmount(ProductDTO[] items) {
+  //   Long total;
+  //   for (ProductDTO object : items) {
+  //     total += object.price;
+  //   }
+  //   // Replace this constant with a calculation of the order's amount
+  //   // Calculate the order total on the server to prevent
+  //   // people from directly manipulating the amount on the client
+  //   return total;
+  // }
 
 
   public static void main(String[] args) {
