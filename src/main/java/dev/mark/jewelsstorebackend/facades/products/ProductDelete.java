@@ -1,4 +1,4 @@
-package dev.mark.jewelsstorebackend.facades;
+package dev.mark.jewelsstorebackend.facades.products;
 
 import org.springframework.stereotype.Component;
 

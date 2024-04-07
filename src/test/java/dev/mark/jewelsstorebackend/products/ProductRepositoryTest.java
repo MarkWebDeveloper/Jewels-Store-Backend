@@ -32,8 +32,8 @@ public class ProductRepositoryTest {
     @DisplayName("Find all products")
     void testGetAllProducts() {
         List<Product> products = repository.findAll();
-        assertEquals(15, products.size());
-        assertThat(products.get(0).getProductName()).isEqualTo("Tope de puerta flexible");
+        assertEquals(3, products.size());
+        assertThat(products.get(0).getProductName()).isEqualTo("Flamenco Abanico Earrings");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ProductRepositoryTest {
     void testGetOneProductById() {
         Product product = repository.findById(2L).orElseThrow();
         assertEquals(2L, product.getId());
-        assertEquals("Papelera de sobremesa", product.getProductName());
+        assertEquals("Scheherazade Blue Earrings", product.getProductName());
     }
 
     @Test
@@ -62,11 +62,11 @@ public class ProductRepositoryTest {
         Product newProduct = new Product();
         entityManager.persist(newProduct);
 
-        repository.deleteById(16L);
+        repository.deleteById(4L);
 
         List<Product> products = repository.findAll();
-        assertThat(products.size(), is(15));
-        assertThat(products.get(0).getProductName(), containsString("Tope de puerta flexible"));
+        assertThat(products.size(), is(3));
+        assertThat(products.get(0).getProductName(), containsString("Flamenco Abanico Earrings"));
     }
 
     @AfterEach

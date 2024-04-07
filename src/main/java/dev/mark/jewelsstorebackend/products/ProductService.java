@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.categories.CategoryNotFoundException;
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
-import dev.mark.jewelsstorebackend.facades.ProductFacade;
+import dev.mark.jewelsstorebackend.facades.products.ProductFacade;
 import dev.mark.jewelsstorebackend.interfaces.IGenericFullService;
+import dev.mark.jewelsstorebackend.interfaces.IGenericSearchService;
 import dev.mark.jewelsstorebackend.messages.Message;
+
 @Service
-public class ProductService implements IGenericFullService<Product, ProductDTO> {
+public class ProductService implements IGenericFullService<Product, ProductDTO>, IGenericSearchService<Product> {
 
     ProductRepository repository;
     CategoryRepository categoryRepository;
@@ -43,6 +45,20 @@ public class ProductService implements IGenericFullService<Product, ProductDTO> 
     @Override
     public Product getByName(String name) throws Exception {
         Product product = repository.findByProductName(name).orElseThrow(() -> new ProductNotFoundException("Product not found"));
+
+        return product;
+    }
+
+    @Override
+    public List<Product> getManyByName(String name) throws Exception {
+        List<Product> product = repository.findByProductNameContainingIgnoreCase(name).orElseThrow(() -> new ProductNotFoundException("Product not found"));
+
+        return product;
+    }
+
+    @Override
+    public List<Product> getManyByCategoryName(String name) throws Exception {
+        List<Product> product = repository.findProductsByCategoryNameIgnoreCase(name).orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         return product;
     }

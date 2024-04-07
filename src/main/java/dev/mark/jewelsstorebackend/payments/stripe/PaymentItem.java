@@ -1,4 +1,4 @@
-package dev.mark.jewelsstorebackend.stripe;
+package dev.mark.jewelsstorebackend.payments.stripe;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

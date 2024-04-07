@@ -1,4 +1,4 @@
-package dev.mark.jewelsstorebackend.stripe;
+package dev.mark.jewelsstorebackend.payments.stripe;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
 @Builder
-public class Payment {
-    PaymentItem[] items;
+public class PaymentResponse {
+    private String clientSecret;
+
 }

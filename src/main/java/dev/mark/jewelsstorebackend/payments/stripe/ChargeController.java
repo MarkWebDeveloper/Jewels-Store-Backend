@@ -1,5 +1,4 @@
-package dev.mark.jewelsstorebackend.stripe.baeldung;
-// package dev.mark.jewelsstorebackend.stripe;
+package dev.mark.jewelsstorebackend.payments.stripe;
 
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.stereotype.Controller;

@@ -12,11 +12,15 @@ public interface IStorageService {
 
     void init();
 
-    String save(@NonNull Long id, MultipartFile file);
+    void saveMainImage(@NonNull Long id, MultipartFile file);
+
+    void saveImages(@NonNull Long id, MultipartFile[] file);
 
 	Path load(String filename);
 
 	Resource loadAsResource(String filename);
+
+    public boolean delete(String filename);
 
     void deleteAll();
 

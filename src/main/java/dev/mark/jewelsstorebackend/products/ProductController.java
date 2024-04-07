@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.mark.jewelsstorebackend.interfaces.IGenericFullService;
+import dev.mark.jewelsstorebackend.interfaces.IGenericSearchService;
 import dev.mark.jewelsstorebackend.messages.Message;
 import lombok.AllArgsConstructor;
 
@@ -24,6 +25,7 @@ import lombok.AllArgsConstructor;
 public class ProductController {
 
     IGenericFullService<Product, ProductDTO> service;
+    IGenericSearchService<Product> searchService;
 
     @GetMapping(path = "")
     public List<Product> index() {
@@ -42,11 +44,27 @@ public class ProductController {
     }
 
     @GetMapping(path = "getByName/{name}")
-    public ResponseEntity<Product> findById(@PathVariable("name") @NonNull String name) throws Exception {
+    public ResponseEntity<Product> findByName(@PathVariable("name") @NonNull String name) throws Exception {
 
         Product product = service.getByName(name);
 
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
+    }
+
+    @GetMapping(path = "getManyByName/{name}")
+    public ResponseEntity<List<Product>> findManyByName(@PathVariable("name") @NonNull String name) throws Exception {
+
+        List<Product> products = searchService.getManyByName(name);
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
+    }
+
+    @GetMapping(path = "getManyByCategoryName/{name}")
+    public ResponseEntity<List<Product>> findManyByCategoryName(@PathVariable("name") @NonNull String name) throws Exception {
+
+        List<Product> products = searchService.getManyByCategoryName(name);
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }
 
     @PostMapping(path = "")

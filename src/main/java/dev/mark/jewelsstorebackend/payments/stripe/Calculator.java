@@ -1,11 +1,11 @@
-package dev.mark.jewelsstorebackend.stripe;
+package dev.mark.jewelsstorebackend.payments.stripe;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class Calculator {
 
-    static Long calculateOrderAmount(PaymentItem[] items) {
+    public static Long calculateOrderAmount(PaymentItem[] items) {
 
     Long total = 0L; 
 
