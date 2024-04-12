@@ -35,7 +35,8 @@ public class ImageService implements IStorageService {
     Time time;
     private final Path rootLocation;
 
-    public ImageService(ImageRepository imageRepository, ProductRepository productRepository, Time time, StorageProperties properties) {
+    public ImageService(ImageRepository imageRepository, ProductRepository productRepository, Time time,
+            StorageProperties properties) {
         if (properties.getLocation().trim().length() == 0) {
             throw new StorageException("File upload location can not be Empty.");
         }
@@ -49,29 +50,31 @@ public class ImageService implements IStorageService {
     @Override
     public void saveMainImage(@NonNull Long productId, MultipartFile file) {
 
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String baseName = fileName.substring(0, fileName.lastIndexOf("."));
-        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
-        String combinedName = MessageFormat.format("{0}-{1}.{2}", baseName, time.checkCurrentTime(), fileExtension);
-        Path path2 = load(combinedName);
-
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-        Image newImage = Image.builder()
-                .imageName(combinedName)
-                .isMainImage(true)
-                .product(product)
-                .build();
+        Image searchedMainimage = product.getImages().stream().filter(image -> image.isMainImage()).findFirst().orElse(null);
 
-        try (InputStream inputStream = file.getInputStream()) {
-            if (file.isEmpty()) {
-                throw new StorageException("Failed to store empty file.");
+        if (file != null && !product.getImages().contains(searchedMainimage)) {
+            String uniqueName = createUniqueName(file);
+            Path path2 = load(uniqueName);
+
+            Image newImage = Image.builder()
+                    .imageName(uniqueName)
+                    .isMainImage(true)
+                    .product(product)
+                    .build();
+
+            try (InputStream inputStream = file.getInputStream()) {
+                if (file.isEmpty()) {
+                    throw new StorageException("Failed to store empty file.");
+                }
+                Files.copy(inputStream, path2, StandardCopyOption.REPLACE_EXISTING);
+                imageRepository.save(newImage);
+            } catch (IOException e) {
+                throw new RuntimeErrorException(null, "File" + uniqueName + "has not been saved");
             }
-            Files.copy(inputStream, path2, StandardCopyOption.REPLACE_EXISTING);
-            imageRepository.save(newImage);
-        } catch (IOException e) {
-            throw new RuntimeErrorException(null, "File" + combinedName + "has not been saved");
+
         }
 
     }
@@ -79,18 +82,22 @@ public class ImageService implements IStorageService {
     @Override
     public void saveImages(@NonNull Long productId, MultipartFile[] files) {
 
-        Arrays.asList(files).stream().forEach(file -> {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            String baseName = fileName.substring(0, fileName.lastIndexOf("."));
-            String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
-            String combinedName = MessageFormat.format("{0}-{1}.{2}", baseName, time.checkCurrentTime(), fileExtension);
-            Path path2 = load(combinedName);
-
-            Product product = productRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                     .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
+        int imageCount = product.getImages().size();
+        int arraySize = files.length;
+
+        if (imageCount + arraySize > 5) {
+            throw new StorageException("The maximum number of files for one product is exceeded");
+        }
+
+        Arrays.asList(files).stream().forEach(file -> {
+            String uniqueName = createUniqueName(file);
+            Path path2 = load(uniqueName);
+
             Image newImage = Image.builder()
-                    .imageName(combinedName)
+                    .imageName(uniqueName)
                     .isMainImage(false)
                     .product(product)
                     .build();
@@ -102,7 +109,7 @@ public class ImageService implements IStorageService {
                 Files.copy(inputStream, path2, StandardCopyOption.REPLACE_EXISTING);
                 imageRepository.save(newImage);
             } catch (IOException e) {
-                throw new RuntimeErrorException(null, "File" + combinedName + "has not been saved");
+                throw new RuntimeErrorException(null, "File" + uniqueName + "has not been saved");
             }
         });
     }
@@ -154,5 +161,14 @@ public class ImageService implements IStorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+
+    public String createUniqueName(MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String baseName = fileName.substring(0, fileName.lastIndexOf("."));
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String combinedName = MessageFormat.format("{0}-{1}.{2}", baseName, time.checkCurrentTime(), fileExtension);
+
+        return combinedName;
     }
 }
