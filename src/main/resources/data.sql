@@ -12,6 +12,13 @@ INSERT INTO categories (id_category, category_name) VALUES (default, 'Studs');
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Flamenco Abanico Earrings', 'Passionate design inspired by flamenco dancers fans', 1999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Scheherazade Blue Earrings', 'Magical earrings for your evening dress', 2999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Esmeralda Earrings', 'Beatiful green earrings Esmeralda', 2999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Flamenco Abanico Earrings', 'Passionate design inspired by flamenco dancers fans', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Scheherazade Blue Earrings', 'Magical earrings for your evening dress', 2999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Esmeralda Earrings', 'Beatiful green earrings Esmeralda', 2999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Flamenco Abanico Earrings', 'Passionate design inspired by flamenco dancers fans', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Scheherazade Blue Earrings', 'Magical earrings for your evening dress', 2999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Esmeralda Earrings', 'Beatiful green earrings Esmeralda', 2999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Flamenco Abanico Earrings', 'Passionate design inspired by flamenco dancers fans', 1999);
 
 /*Images*/
 
@@ -23,6 +30,7 @@ INSERT INTO images (id_image, image_name, is_main_image) VALUES (default, 'place
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 1);
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 2);
 INSERT INTO images (id_image, image_name, is_main_image, product_id, category_id) VALUES (default, 'esmeralda-earrings.png', true, 3, 1);
+
 
 /*Categories images*/
 
@@ -36,3 +44,10 @@ INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (de
 INSERT INTO categories_products (product_id, category_id) VALUES (1, 1);
 INSERT INTO categories_products (product_id, category_id) VALUES (2, 1);
 INSERT INTO categories_products (product_id, category_id) VALUES (3, 1);
+INSERT INTO categories_products (product_id, category_id) VALUES (4, 1);
+INSERT INTO categories_products (product_id, category_id) VALUES (5, 1);
+INSERT INTO categories_products (product_id, category_id) VALUES (6, 1);
+INSERT INTO categories_products (product_id, category_id) VALUES (7, 1);
+INSERT INTO categories_products (product_id, category_id) VALUES (8, 1);
+INSERT INTO categories_products (product_id, category_id) VALUES (9, 1);
+INSERT INTO categories_products (product_id, category_id) VALUES (10, 1);
