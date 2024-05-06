@@ -88,7 +88,7 @@ public class ImageService implements IStorageService {
         int imageCount = product.getImages().size();
         int arraySize = files.length;
 
-        if (imageCount + arraySize > 5) {
+        if (imageCount + arraySize > 10) {
             throw new StorageException("The maximum number of files for one product is exceeded");
         }
 
