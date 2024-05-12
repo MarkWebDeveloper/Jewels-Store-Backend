@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +29,7 @@ public class ImageController {
 
     @PostMapping(path = "/images/uploadImages/{id}")
     ResponseEntity<ResponseMessage> uploadImages(@PathVariable("id") @NonNull Long id,
-            @RequestParam(name = "file", required = false) MultipartFile file, @RequestParam("files") MultipartFile[] files) {
+            @RequestParam(name = "file", required = false) MultipartFile file, @RequestParam(name = "files", required = false) MultipartFile[] files) {
 
         String message = "";
 
@@ -52,8 +53,10 @@ public class ImageController {
         if (file == null)
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"");
+        return ResponseEntity.ok().headers(headers).body(file);
     }
 
     @DeleteMapping("/images/{filename:.+}")

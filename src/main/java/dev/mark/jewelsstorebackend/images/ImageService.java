@@ -83,35 +83,37 @@ public class ImageService implements IStorageService {
     public void saveImages(@NonNull Long productId, MultipartFile[] files) {
 
         Product product = productRepository.findById(productId)
-                    .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-        int imageCount = product.getImages().size();
-        int arraySize = files.length;
+        if (files != null) {
+            int imageCount = product.getImages().size();
+            int arraySize = files.length;
 
-        if (imageCount + arraySize > 10) {
-            throw new StorageException("The maximum number of files for one product is exceeded");
-        }
-
-        Arrays.asList(files).stream().forEach(file -> {
-            String uniqueName = createUniqueName(file);
-            Path path2 = load(uniqueName);
-
-            Image newImage = Image.builder()
-                    .imageName(uniqueName)
-                    .isMainImage(false)
-                    .product(product)
-                    .build();
-
-            try (InputStream inputStream = file.getInputStream()) {
-                if (file.isEmpty()) {
-                    throw new StorageException("Failed to store empty file.");
-                }
-                Files.copy(inputStream, path2, StandardCopyOption.REPLACE_EXISTING);
-                imageRepository.save(newImage);
-            } catch (IOException e) {
-                throw new RuntimeErrorException(null, "File" + uniqueName + "has not been saved");
+            if (imageCount + arraySize > 10) {
+                throw new StorageException("The maximum number of files for one product is exceeded");
             }
-        });
+
+            Arrays.asList(files).stream().forEach(file -> {
+                String uniqueName = createUniqueName(file);
+                Path path2 = load(uniqueName);
+
+                Image newImage = Image.builder()
+                        .imageName(uniqueName)
+                        .isMainImage(false)
+                        .product(product)
+                        .build();
+
+                try (InputStream inputStream = file.getInputStream()) {
+                    if (file.isEmpty()) {
+                        throw new StorageException("Failed to store empty file.");
+                    }
+                    Files.copy(inputStream, path2, StandardCopyOption.REPLACE_EXISTING);
+                    imageRepository.save(newImage);
+                } catch (IOException e) {
+                    throw new RuntimeErrorException(null, "File" + uniqueName + "has not been saved");
+                }
+            });
+        }
     }
 
     @Override
