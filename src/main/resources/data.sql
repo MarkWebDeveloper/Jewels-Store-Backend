@@ -1,3 +1,10 @@
+-- /*Users*/
+-- INSERT INTO users(id_user, username, password) VALUES (default, 'admin', '$2a$12$xOx5K0CaHRWkRgaZBRHvZ.tcrVC/AeA3sIjCySnHKk6ZEM9kmuIyO');
+
+-- INSERT INTO users(id_user, username, password) VALUES (default, 'user1', '$2a$12$xOx5K0CaHRWkRgaZBRHvZ.tcrVC/AeA3sIjCySnHKk6ZEM9kmuIyO');
+
+-- INSERT INTO users(id_user, username, password) VALUES (default, 'user2', '$2a$12$xOx5K0CaHRWkRgaZBRHvZ.tcrVC/AeA3sIjCySnHKk6ZEM9kmuIyO');
+
 /*Categories*/
 
 INSERT INTO categories (id_category, category_name) VALUES (default, 'Earrings');

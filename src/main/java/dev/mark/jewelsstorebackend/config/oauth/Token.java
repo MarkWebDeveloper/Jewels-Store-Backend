@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Token { 
       
-    private String userId; 
+    private Long userId; 
     private String accessToken; 
     private String refreshToken;    
   

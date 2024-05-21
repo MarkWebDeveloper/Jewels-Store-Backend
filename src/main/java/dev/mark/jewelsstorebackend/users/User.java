@@ -3,7 +3,6 @@ package dev.mark.jewelsstorebackend.users;
 import java.util.Collection; 
 import java.util.Collections; 
   
-import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority; 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,11 +12,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor; 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter; 
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails { 
@@ -25,15 +28,13 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    private String id; 
+    private Long id; 
   
-    @NonNull
     private String username; 
   
-    @NonNull
     private String password; 
 
-    public User(String id, String username, String password) { 
+    public User(Long id, String username, String password) { 
         super(); 
         this.id = id; 
         this.username = username; 

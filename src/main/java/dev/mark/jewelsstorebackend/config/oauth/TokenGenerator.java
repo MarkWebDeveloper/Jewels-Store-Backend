@@ -34,7 +34,7 @@ public class TokenGenerator {
                 .issuer("myApp") 
                 .issuedAt(now) 
                 .expiresAt(now.plus(5, ChronoUnit.MINUTES)) 
-                .subject(user.getId()) 
+                .subject(Long.toString(user.getId())) 
                 .build(); 
   
         return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue(); 
@@ -48,7 +48,7 @@ public class TokenGenerator {
                 .issuer("myApp") 
                 .issuedAt(now) 
                 .expiresAt(now.plus(30, ChronoUnit.DAYS)) 
-                .subject(user.getId()) 
+                .subject(Long.toString(user.getId())) 
                 .build(); 
   
         return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue(); 
