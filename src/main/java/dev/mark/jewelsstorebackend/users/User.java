@@ -26,10 +26,10 @@ public class User implements UserDetails {
     @NonNull
     private String password; 
 
-    public User(String id, String userName, String password) { 
+    public User(String id, String username, String password) { 
         super(); 
         this.id = id; 
-        this.username = userName; 
+        this.username = username; 
         this.password = password; 
     } 
 
