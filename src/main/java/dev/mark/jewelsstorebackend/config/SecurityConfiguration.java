@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -44,7 +43,6 @@ import dev.mark.jewelsstorebackend.config.oauth.KeyUtils;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@EnableJpaAuditing
 public class SecurityConfiguration {
     @Value("${api-endpoint}")
     String endpoint;
@@ -75,9 +73,9 @@ public class SecurityConfiguration {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                // .logout(out -> out
-                //         .logoutUrl(endpoint + "/logout")
-                //         .deleteCookies("JSSESIONID"))
+                .logout(out -> out
+                        .logoutUrl(endpoint + "/logout")
+                        .deleteCookies("JSSESIONID"))
                 .authorizeHttpRequests((authorize) -> authorize 
                                 .requestMatchers("/api/auth/*").permitAll() 
                                 .anyRequest().authenticated() 
@@ -158,11 +156,6 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-            return new BCryptPasswordEncoder();
     }
 
 } 
