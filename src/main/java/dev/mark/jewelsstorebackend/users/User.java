@@ -8,11 +8,13 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority; 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor; 
 
 @Data
 @NoArgsConstructor
+@Table(name = "users")
 public class User implements UserDetails { 
   
     @Id
@@ -23,11 +25,20 @@ public class User implements UserDetails {
   
     @NonNull
     private String password; 
-  
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+
+    public User(String id, String userName, String password) { 
+        super(); 
+        this.id = id; 
+        this.username = userName; 
+        this.password = password; 
+    } 
+
+    public User( String userName, String password) { 
+        super(); 
+          
+        this.username = userName; 
+        this.password = password; 
+    } 
 
     // Methods required by Spring Security for user details 
     public Collection<? extends GrantedAuthority> getAuthorities() { 
