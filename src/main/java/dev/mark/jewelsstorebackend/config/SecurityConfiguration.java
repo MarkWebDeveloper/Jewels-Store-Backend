@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -77,9 +78,10 @@ public class SecurityConfiguration {
                 //         .logoutUrl(endpoint + "/logout")
                 //         .deleteCookies("JSSESIONID"))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll() 
+                                .requestMatchers(HttpMethod.GET, "/").permitAll()
+                                .requestMatchers(PathRequest.toH2Console()).permitAll() 
                                 .requestMatchers("/api/auth/register").permitAll() 
-                                .requestMatchers(endpoint + "/products/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, endpoint + "/products/**").permitAll()
                                 .anyRequest().authenticated() 
                 ) 
                 .httpBasic(basic -> basic.disable())
