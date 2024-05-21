@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -26,36 +28,37 @@ public class SecurityConfiguration {
 
     // JpaUserDetailService jpaUserDetailService;
 
-    
-
-    // public SecurityConfiguration(JpaUserDetailService jpaUserDetailService) {
-    //     this.jpaUserDetailService = jpaUserDetailService;
-    // }
+    public SecurityConfiguration() {
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-
+        
         http
-                .cors(Customizer.withDefaults())
+                .cors(withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .formLogin(form -> form.disable());
+                // .formLogin(form -> form.disable())
                 // .logout(out -> out
                 //         .logoutUrl(endpoint + "/logout")
                 //         .deleteCookies("JSSESIONID"))
-                // .authorizeHttpRequests(auth -> auth
-                //         .requestMatchers(HttpMethod.GET, endpoint + "/login").hasAnyRole("ADMIN","USER")
-                //         .requestMatchers(HttpMethod.GET, endpoint + "/users").hasRole("ADMIN")
-                //         .requestMatchers(HttpMethod.PUT, endpoint + "/users/eventSignUp/{id}").hasAnyRole("ADMIN","USER")
-                //         .requestMatchers(HttpMethod.GET, endpoint + "/cities").permitAll()
-                //         .requestMatchers(HttpMethod.GET, endpoint + "/events").permitAll()
-                //         .requestMatchers(HttpMethod.POST, endpoint + "/events").hasRole("ADMIN")
-                //         .requestMatchers(HttpMethod.POST, endpoint + "/images").permitAll()
-                //         .requestMatchers(HttpMethod.POST, endpoint + "/users").permitAll()
-                //         .requestMatchers(HttpMethod.GET, endpoint + "/images/**").permitAll()
-                //         .anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.GET, "/authorized").permitAll()
+                .requestMatchers(HttpMethod.GET, endpoint + "/products/**").hasAuthority("SCOPE_read")
+                .requestMatchers(HttpMethod.POST, endpoint + "/products/**").hasAuthority("SCOPE_write")
+                .requestMatchers(HttpMethod.PUT, endpoint + "/products/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, endpoint + "/products/**").hasAuthority("SCOPE_write")
+                .requestMatchers(HttpMethod.GET, endpoint + "/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, endpoint + "/imgs/**").permitAll()
+                .requestMatchers(HttpMethod.GET, endpoint + "/images/**").permitAll()
+                .requestMatchers(HttpMethod.POST, endpoint + "/images/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, endpoint + "/images/**").permitAll()
+                .anyRequest().authenticated())
                 // .userDetailsService(jpaUserDetailService)
                 // .httpBasic(Customizer.withDefaults())
-                // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2Login(login -> login.loginPage("/oauth2/authorization/client-app"))
+                .oauth2Client(withDefaults())
+                .oauth2ResourceServer(resourceServer -> resourceServer.jwt(withDefaults()));
         
         http.headers(header -> header.frameOptions(frame -> frame.sameOrigin()));
 

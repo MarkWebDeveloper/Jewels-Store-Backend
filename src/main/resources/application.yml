@@ -16,6 +16,7 @@ spring:
               - openid
               - profile
               - read
+              - write
             client-name: client-app
         provider:
           spring:
