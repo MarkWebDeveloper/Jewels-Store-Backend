@@ -1,4 +1,4 @@
-package dev.mark.jewelsstorebackend.config.oauth;
+package dev.mark.jewelsstorebackend.auth;
 
 import java.text.MessageFormat; 
 import java.time.Duration; 

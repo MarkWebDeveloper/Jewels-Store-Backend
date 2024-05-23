@@ -1,25 +1,10 @@
-package dev.mark.jewelsstorebackend.config.oauth;
+package dev.mark.jewelsstorebackend.auth;
 
-import lombok.Getter; 
-import lombok.Setter; 
-  
-@Getter
-@Setter
-public class SignUp { 
+public class LoginDTO { 
       
     private String username; 
     private String password; 
       
-    public SignUp() { 
-          
-    } 
-      
-      
-    public SignUp(String username, String password) { 
-        super(); 
-        this.username = username; 
-        this.password = password; 
-    } 
     public String getUsername() { 
         return username; 
     } 
@@ -35,4 +20,4 @@ public class SignUp {
       
       
   
-} 
+}

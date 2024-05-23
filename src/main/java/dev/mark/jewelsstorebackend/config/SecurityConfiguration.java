@@ -38,8 +38,8 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import dev.mark.jewelsstorebackend.config.oauth.JWTtoUserConverter;
-import dev.mark.jewelsstorebackend.config.oauth.KeyUtils;
+import dev.mark.jewelsstorebackend.auth.JWTtoUserConverter;
+import dev.mark.jewelsstorebackend.auth.KeyUtils;
 
 
 @Configuration
@@ -79,7 +79,8 @@ public class SecurityConfiguration {
                 //         .deleteCookies("JSSESIONID"))
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(HttpMethod.GET, "/").permitAll()
-                                .requestMatchers(PathRequest.toH2Console()).permitAll() 
+                                .requestMatchers(PathRequest.toH2Console()).permitAll()
+                                .requestMatchers("/api/auth/login").permitAll() 
                                 .requestMatchers("/api/auth/register").permitAll() 
                                 .requestMatchers(HttpMethod.GET, endpoint + "/products/**").permitAll()
                                 .anyRequest().authenticated() 
