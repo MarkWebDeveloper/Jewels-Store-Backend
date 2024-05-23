@@ -53,14 +53,14 @@ public class TokenGenerator {
   
         return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue(); 
     } 
-    public Token createToken(Authentication authentication) { 
+    public TokenDTO createToken(Authentication authentication) { 
         if (!(authentication.getPrincipal() instanceof User user)) { 
             throw new BadCredentialsException( 
                     MessageFormat.format("principal {0} is not of User type", authentication.getPrincipal().getClass()) 
             ); 
         } 
   
-        Token tokenDTO = new Token(); 
+        TokenDTO tokenDTO = new TokenDTO(); 
         tokenDTO.setUserId(user.getId()); 
         tokenDTO.setAccessToken(createAccessToken(authentication)); 
   

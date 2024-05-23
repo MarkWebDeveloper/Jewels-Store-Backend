@@ -33,7 +33,7 @@ public class AuthController {
     JwtAuthenticationProvider refreshTokenAuthProvider; 
   
     @PostMapping("/register") 
-    public ResponseEntity<Token> register(@RequestBody SignUpDTO signupDTO) { 
+    public ResponseEntity<TokenDTO> register(@RequestBody SignUpDTO signupDTO) { 
         User user = new User(signupDTO.getUsername(), signupDTO.getPassword()); 
         userDetailsManager.createUser(user); 
   
@@ -45,14 +45,14 @@ public class AuthController {
   
   
     @PostMapping("/login") 
-    public ResponseEntity<Token> login(@RequestBody LoginDTO loginDTO) { 
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO loginDTO) { 
         Authentication authentication = daoAuthenticationProvider.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(loginDTO.getUsername(), loginDTO.getPassword())); 
   
         return ResponseEntity.ok(tokenGenerator.createToken(authentication)); 
     } 
   
     @PostMapping("/token") 
-    public ResponseEntity<Token> token(@RequestBody Token tokenDTO) { 
+    public ResponseEntity<TokenDTO> token(@RequestBody TokenDTO tokenDTO) { 
         Authentication authentication = refreshTokenAuthProvider.authenticate(new BearerTokenAuthenticationToken(tokenDTO.getRefreshToken())); 
         Jwt jwt = (Jwt) authentication.getCredentials(); 
         // check if present in db and not revoked, etc 
