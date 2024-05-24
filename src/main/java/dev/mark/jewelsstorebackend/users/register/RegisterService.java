@@ -3,9 +3,11 @@ package dev.mark.jewelsstorebackend.users.register;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import dev.mark.jewelsstorebackend.encrypt.EncoderFacade;
+import dev.mark.jewelsstorebackend.profiles.Profile;
+import dev.mark.jewelsstorebackend.profiles.ProfileRepository;
 import dev.mark.jewelsstorebackend.roles.Role;
 import dev.mark.jewelsstorebackend.roles.RoleService;
 import dev.mark.jewelsstorebackend.users.User;

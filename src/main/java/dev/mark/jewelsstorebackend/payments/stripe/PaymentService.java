@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import com.stripe.exception.StripeException;
 
 import dev.mark.jewelsstorebackend.config.payments.stripe.StripeConfiguration;
-import dev.mark.jewelsstorebackend.facades.payments.PaymentFacade;
+import dev.mark.jewelsstorebackend.payments.stripe.facades.PaymentFacade;
 import lombok.AllArgsConstructor;
 
 @Service

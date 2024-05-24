@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
-import dev.mark.jewelsstorebackend.facades.products.ProductFacade;
+import dev.mark.jewelsstorebackend.products.facades.ProductFacade;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {

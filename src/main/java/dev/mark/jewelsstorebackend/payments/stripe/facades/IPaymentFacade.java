@@ -1,4 +1,4 @@
-package dev.mark.jewelsstorebackend.facades.payments;
+package dev.mark.jewelsstorebackend.payments.stripe.facades;
 
 import dev.mark.jewelsstorebackend.payments.stripe.PaymentRequest;
 

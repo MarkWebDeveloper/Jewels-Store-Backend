@@ -21,7 +21,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import dev.mark.jewelsstorebackend.config.StorageProperties;
-import dev.mark.jewelsstorebackend.interfaces.IStorageService;
 import dev.mark.jewelsstorebackend.products.Product;
 import dev.mark.jewelsstorebackend.products.ProductNotFoundException;
 import dev.mark.jewelsstorebackend.products.ProductRepository;

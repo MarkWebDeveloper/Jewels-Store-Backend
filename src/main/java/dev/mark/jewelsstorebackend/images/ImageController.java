@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.mark.jewelsstorebackend.interfaces.IStorageService;
 import dev.mark.jewelsstorebackend.messages.ResponseMessage;
 
 @RestController

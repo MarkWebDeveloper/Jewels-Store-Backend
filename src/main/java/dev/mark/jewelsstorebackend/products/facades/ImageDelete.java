@@ -1,4 +1,4 @@
-package dev.mark.jewelsstorebackend.facades.products;
+package dev.mark.jewelsstorebackend.products.facades;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -2,8 +2,11 @@ package dev.mark.jewelsstorebackend.products;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.images.Image;
+import dev.mark.jewelsstorebackend.profiles.Profile;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,4 +55,9 @@ public class Product {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "categories_products", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     Set<Category> categories;
+
+    @Column
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "favorites")
+    Set<Profile> profiles;
 }

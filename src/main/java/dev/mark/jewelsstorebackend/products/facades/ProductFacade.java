@@ -1,8 +1,6 @@
-package dev.mark.jewelsstorebackend.facades.products;
+package dev.mark.jewelsstorebackend.products.facades;
 
 import org.springframework.stereotype.Component;
-
-import dev.mark.jewelsstorebackend.interfaces.IProductFacade;
 
 @Component
 public class ProductFacade implements IProductFacade{
