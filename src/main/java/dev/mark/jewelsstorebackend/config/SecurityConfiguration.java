@@ -38,6 +38,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 
 import dev.mark.jewelsstorebackend.auth.JWTtoUserConverter;
 import dev.mark.jewelsstorebackend.auth.KeyUtils;
+import dev.mark.jewelsstorebackend.users.security.JpaUserDetailsService;
 
 
 @Configuration
@@ -58,13 +59,11 @@ public class SecurityConfiguration {
     @Autowired
     UserDetailsManager userDetailsManager; 
 
-    // JpaUserDetailService jpaUserDetailService;
+    JpaUserDetailsService jpaUserDetailService;
 
-    
-
-    // public SecurityConfiguration(JpaUserDetailService jpaUserDetailService) {
-    //     this.jpaUserDetailService = jpaUserDetailService;
-    // }
+    public SecurityConfiguration(JpaUserDetailsService jpaUserDetailService) {
+        this.jpaUserDetailService = jpaUserDetailService;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -83,6 +82,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, endpoint + "/products/**").permitAll()
                                 .anyRequest().authenticated() 
                 ) 
+                .userDetailsService(jpaUserDetailsService)
                 .httpBasic(basic -> basic.disable())
                 .oauth2ResourceServer((oauth2) -> 
                         oauth2.jwt((jwt) -> jwt.jwtAuthenticationConverter(jwtToUserConverter)) 
