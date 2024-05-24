@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
   
 @RestController
-@RequestMapping("/api/auth") 
+@RequestMapping("${api-endpoint}") 
 public class AuthController { 
 
     @Autowired
@@ -26,14 +26,14 @@ public class AuthController {
     @Qualifier("jwtRefreshTokenAuthProvider") 
     JwtAuthenticationProvider refreshTokenAuthProvider; 
   
-    @PostMapping("/login") 
+    @PostMapping("/users/login") 
     public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO loginDTO) { 
         Authentication authentication = daoAuthenticationProvider.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(loginDTO.getUsername(), loginDTO.getPassword())); 
   
         return ResponseEntity.ok(tokenGenerator.createToken(authentication)); 
     } 
   
-    @PostMapping("/token") 
+    @PostMapping("/auth/token") 
     public ResponseEntity<TokenDTO> token(@RequestBody TokenDTO tokenDTO) { 
         Authentication authentication = refreshTokenAuthProvider.authenticate(new BearerTokenAuthenticationToken(tokenDTO.getRefreshToken())); 
         Jwt jwt = (Jwt) authentication.getCredentials(); 
