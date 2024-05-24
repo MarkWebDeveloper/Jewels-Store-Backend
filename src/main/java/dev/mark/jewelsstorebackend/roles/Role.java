@@ -2,10 +2,9 @@ package dev.mark.jewelsstorebackend.roles;
 
 import java.util.Set;
 
-import org.springframework.security.core.userdetails.User;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import dev.mark.jewelsstorebackend.users.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

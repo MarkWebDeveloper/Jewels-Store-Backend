@@ -23,7 +23,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -55,9 +54,6 @@ public class SecurityConfiguration {
 
     @Autowired
     PasswordEncoder passwordEncoder; 
-    
-    @Autowired
-    UserDetailsManager userDetailsManager; 
 
     JpaUserDetailsService jpaUserDetailService;
 
@@ -71,18 +67,19 @@ public class SecurityConfiguration {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form.disable())
                 // .logout(out -> out
                 //         .logoutUrl(endpoint + "/logout")
                 //         .deleteCookies("JSSESIONID"))
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(HttpMethod.GET, "/").permitAll()
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers("/api/auth/login").permitAll() 
-                                .requestMatchers("/api/auth/register").permitAll() 
+                                .requestMatchers(endpoint + "/users/login").permitAll() 
+                                .requestMatchers(HttpMethod.POST, endpoint + "/users/register").permitAll() 
                                 .requestMatchers(HttpMethod.GET, endpoint + "/products/**").permitAll()
                                 .anyRequest().authenticated() 
                 ) 
-                .userDetailsService(jpaUserDetailsService)
+                .userDetailsService(jpaUserDetailService)
                 .httpBasic(basic -> basic.disable())
                 .oauth2ResourceServer((oauth2) -> 
                         oauth2.jwt((jwt) -> jwt.jwtAuthenticationConverter(jwtToUserConverter)) 
@@ -144,7 +141,7 @@ public class SecurityConfiguration {
     DaoAuthenticationProvider daoAuthenticationProvider() { 
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(); 
         provider.setPasswordEncoder(passwordEncoder); 
-        provider.setUserDetailsService(userDetailsManager); 
+        provider.setUserDetailsService(jpaUserDetailService); 
         return provider; 
     }
 

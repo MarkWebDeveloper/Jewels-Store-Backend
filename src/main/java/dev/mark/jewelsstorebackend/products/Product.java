@@ -34,6 +34,16 @@ import lombok.Setter;
 @Table(name = "products")
 public class Product {
     
+    public Product(Long id, String productName, String productDescription, Set<Image> images, Long price,
+            Set<Category> categories) {
+        this.id = id;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.images = images;
+        this.price = price;
+        this.categories = categories;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product")
