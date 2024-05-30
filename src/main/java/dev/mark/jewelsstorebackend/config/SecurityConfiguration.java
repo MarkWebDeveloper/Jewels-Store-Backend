@@ -23,44 +23,20 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfiguration {
     @Value("${api-endpoint}")
     String endpoint;
-
-    // JpaUserDetailService jpaUserDetailService;
-
     
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-    // public SecurityConfiguration(JpaUserDetailService jpaUserDetailService) {
-    //     this.jpaUserDetailService = jpaUserDetailService;
-    // }
+        http
+        .oauth2ResourceServer((oauth2) -> oauth2
+            .jwt(Customizer.withDefaults())
+        )
+        .authorizeHttpRequests((authorize) -> authorize
+            .anyRequest().authenticated()
+        );
 
-    // @Bean
-    // public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-
-    //     http
-    //             .cors(Customizer.withDefaults())
-    //             .csrf(csrf -> csrf.disable())
-    //             .formLogin(form -> form.disable());
-    //             .logout(out -> out
-    //                     .logoutUrl(endpoint + "/logout")
-    //                     .deleteCookies("JSSESIONID"))
-    //             .authorizeHttpRequests(auth -> auth
-    //                     .requestMatchers(HttpMethod.GET, endpoint + "/login").hasAnyRole("ADMIN","USER")
-    //                     .requestMatchers(HttpMethod.GET, endpoint + "/users").hasRole("ADMIN")
-    //                     .requestMatchers(HttpMethod.PUT, endpoint + "/users/eventSignUp/{id}").hasAnyRole("ADMIN","USER")
-    //                     .requestMatchers(HttpMethod.GET, endpoint + "/cities").permitAll()
-    //                     .requestMatchers(HttpMethod.GET, endpoint + "/events").permitAll()
-    //                     .requestMatchers(HttpMethod.POST, endpoint + "/events").hasRole("ADMIN")
-    //                     .requestMatchers(HttpMethod.POST, endpoint + "/images").permitAll()
-    //                     .requestMatchers(HttpMethod.POST, endpoint + "/users").permitAll()
-    //                     .requestMatchers(HttpMethod.GET, endpoint + "/images/**").permitAll()
-    //                     .anyRequest().authenticated())
-    //             .userDetailsService(jpaUserDetailService)
-    //             .httpBasic(Customizer.withDefaults())
-    //             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
-        
-    //     http.headers(header -> header.frameOptions(frame -> frame.sameOrigin()));
-
-    //     return http.build();
-    // }
+    return http.build();
+    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
