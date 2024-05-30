@@ -8,13 +8,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class JewelsStoreBackendApplication {
+	
+	@Bean
+	PasswordEncoder passwordEncoder() { 
+		return new BCryptPasswordEncoder(); 
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(JewelsStoreBackendApplication.class, args);
 	}
 
-	@Bean
-    PasswordEncoder passwordEncoder() { 
-        return new BCryptPasswordEncoder(); 
-    }
 }
