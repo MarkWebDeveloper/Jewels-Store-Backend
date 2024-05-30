@@ -1,6 +1,5 @@
 package dev.mark.jewelsstorebackend.auth;
 
-import java.text.MessageFormat; 
 import java.time.Duration; 
 import java.time.Instant; 
 import java.time.temporal.ChronoUnit; 
@@ -10,11 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet; 
 import org.springframework.security.oauth2.jwt.JwtEncoder; 
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.security.authentication.BadCredentialsException; 
 import org.springframework.security.oauth2.jwt.Jwt; 
 import org.springframework.stereotype.Component;
 
-import dev.mark.jewelsstorebackend.users.User;
 import dev.mark.jewelsstorebackend.users.security.SecurityUser;
   
 @Component
@@ -63,6 +60,7 @@ public class TokenGenerator {
         //             MessageFormat.format("principal {0} is not of User type", authentication.getPrincipal().getClass()) 
         //     ); 
         // } 
+        System.out.println(authentication.getPrincipal());
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
   
         TokenDTO tokenDTO = new TokenDTO(); 
