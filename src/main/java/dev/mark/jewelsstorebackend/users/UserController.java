@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
         @Autowired
         UserRepository userRepository; 
   
-        @GetMapping("user/getById/{id}")
+        @GetMapping("/user/getById/{id}")
         @PreAuthorize("#user.id == #id") 
         public ResponseEntity<UserDTO> user(@AuthenticationPrincipal User user, @PathVariable String id) { 
             return ResponseEntity.ok(UserDTO.from(userRepository.findById(id).orElseThrow())); 
