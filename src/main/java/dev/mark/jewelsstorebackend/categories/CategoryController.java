@@ -20,12 +20,12 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "${api-endpoint}/categories")
+@RequestMapping(path = "${api-endpoint}")
 public class CategoryController {
 
     IGenericFullService<Category, CategoryDTO> service;
 
-    @GetMapping(path = "")
+    @GetMapping(path = "/all/categories")
     public List<Category> index() {
 
         List<Category> categories = service.getAll();
@@ -33,7 +33,7 @@ public class CategoryController {
         return categories;
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/all/categories/{id}")
     public ResponseEntity<Category> findById(@PathVariable("id") @NonNull Long id) throws Exception {
 
         Category category = service.getById(id);
@@ -41,7 +41,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(category);
     }
 
-    @GetMapping(path = "getByName/{name}")
+    @GetMapping(path = "/all/categories/getByName/{name}")
     public ResponseEntity<Category> findById(@PathVariable("name") @NonNull String name) throws Exception {
 
         Category category = service.getByName(name);
@@ -49,7 +49,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(category);
     }
 
-    @PostMapping(path = "")
+    @PostMapping(path = "/admin/categories")
     public ResponseEntity<Category> create(@RequestBody CategoryDTO category) {
 
         Category newCategory = service.save(category);
@@ -57,7 +57,7 @@ public class CategoryController {
         return ResponseEntity.status(201).body(newCategory);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/categories/{id}")
     public ResponseEntity<Category> update(@PathVariable("id") @NonNull Long id, @RequestBody CategoryDTO category) throws Exception {
 
         Category updatedCategory = service.update(id, category);
@@ -65,7 +65,7 @@ public class CategoryController {
         return ResponseEntity.status(200).body(updatedCategory);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/admin/categories/{id}")
     public ResponseEntity<Message> remove(@PathVariable("id") @NonNull Long id) throws Exception { 
 
         Message delete = service.delete(id);

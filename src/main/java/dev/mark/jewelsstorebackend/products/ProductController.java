@@ -21,13 +21,13 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "${api-endpoint}/products")
+@RequestMapping(path = "${api-endpoint}")
 public class ProductController {
 
     IGenericFullService<Product, ProductDTO> service;
     IGenericSearchService<Product> searchService;
 
-    @GetMapping(path = "")
+    @GetMapping(path = "/all/products")
     public List<Product> index() {
 
         List<Product> products = service.getAll();
@@ -35,7 +35,7 @@ public class ProductController {
         return products;
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/all/products/{id}")
     public ResponseEntity<Product> findById(@PathVariable("id") @NonNull Long id) throws Exception {
 
         Product product = service.getById(id);
@@ -43,7 +43,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
     }
 
-    @GetMapping(path = "getByName/{name}")
+    @GetMapping(path = "/all/products/getByName/{name}")
     public ResponseEntity<Product> findByName(@PathVariable("name") @NonNull String name) throws Exception {
 
         Product product = service.getByName(name);
@@ -51,7 +51,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(product);
     }
 
-    @GetMapping(path = "getManyByName/{name}")
+    @GetMapping(path = "/all/products/getManyByName/{name}")
     public ResponseEntity<List<Product>> findManyByName(@PathVariable("name") @NonNull String name) throws Exception {
 
         List<Product> products = searchService.getManyByName(name);
@@ -59,7 +59,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }
 
-    @GetMapping(path = "getManyByCategoryName/{name}")
+    @GetMapping(path = "/all/products/getManyByCategoryName/{name}")
     public ResponseEntity<List<Product>> findManyByCategoryName(@PathVariable("name") @NonNull String name) throws Exception {
 
         List<Product> products = searchService.getManyByCategoryName(name);
@@ -67,7 +67,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }
 
-    @PostMapping(path = "")
+    @PostMapping(path = "admin/products")
     public ResponseEntity<Product> create(@RequestBody ProductDTO product) {
 
         Product newProduct = service.save(product);
@@ -75,7 +75,7 @@ public class ProductController {
         return ResponseEntity.status(201).body(newProduct);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("admin/products/{id}")
     public ResponseEntity<Product> update(@PathVariable("id") @NonNull Long id, @RequestBody ProductDTO product) throws Exception {
 
         Product updatedProduct = service.update(id, product);
@@ -83,7 +83,7 @@ public class ProductController {
         return ResponseEntity.status(200).body(updatedProduct);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "admin/products/{id}")
     public ResponseEntity<Message> remove(@PathVariable("id") @NonNull Long id) throws Exception { 
 
         Message delete = service.delete(id);

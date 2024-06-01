@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -68,16 +67,15 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .formLogin(form -> form.disable())
-                // .logout(out -> out
-                //         .logoutUrl(endpoint + "/logout")
-                //         .deleteCookies("JSSESIONID"))
+                .logout(out -> out
+                        .logoutUrl(endpoint + "/logout"))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/error").permitAll()
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers(endpoint + "/users/login").permitAll() 
-                                .requestMatchers(HttpMethod.POST, endpoint + "/users/register").permitAll() 
-                                .requestMatchers(HttpMethod.POST, endpoint + "/auth/token").permitAll() 
-                                .requestMatchers(HttpMethod.GET, endpoint + "/products/**").hasRole("USER")
+                                .requestMatchers("/error").permitAll()
+                                .requestMatchers(endpoint + "/all/**").permitAll()
+                                .requestMatchers(endpoint + "/any/**").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(endpoint + "/admin/**").hasRole("ADMIN")
+                                .requestMatchers(endpoint + "/user/**").hasRole("USER") 
                                 .anyRequest().authenticated() 
                 ) 
                 .userDetailsService(jpaUserDetailService)

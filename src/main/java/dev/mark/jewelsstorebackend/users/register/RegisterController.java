@@ -20,7 +20,7 @@ public class RegisterController {
 
     TokenGenerator tokenGenerator; 
   
-    @PostMapping("/users/register") 
+    @PostMapping("/all/register") 
     public ResponseEntity<TokenDTO> register(@RequestBody SignUpDTO signupDTO) { 
 
         TokenDTO token = service.createUser(signupDTO);

@@ -26,7 +26,7 @@ public class AuthController {
     @Qualifier("jwtRefreshTokenAuthProvider") 
     JwtAuthenticationProvider refreshTokenAuthProvider; 
   
-    @PostMapping("/users/login") 
+    @PostMapping("/all/login") 
     public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO loginDTO) { 
         Authentication authentication = daoAuthenticationProvider.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(loginDTO.getUsername(), loginDTO.getPassword())); 
         System.out.println(authentication);
@@ -34,7 +34,7 @@ public class AuthController {
         return ResponseEntity.ok(tokenGenerator.createToken(authentication)); 
     } 
   
-    @PostMapping("/auth/token") 
+    @PostMapping("/all/token") 
     public ResponseEntity<TokenDTO> token(@RequestBody TokenDTO tokenDTO) { 
         Authentication authentication = refreshTokenAuthProvider.authenticate(new BearerTokenAuthenticationToken(tokenDTO.getRefreshToken())); 
         Jwt jwt = (Jwt) authentication.getCredentials(); 

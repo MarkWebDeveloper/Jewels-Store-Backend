@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "${api-endpoint}/payments")
+@RequestMapping(path = "${api-endpoint}/any/payments")
 public class PaymentController {
 
     PaymentService service;

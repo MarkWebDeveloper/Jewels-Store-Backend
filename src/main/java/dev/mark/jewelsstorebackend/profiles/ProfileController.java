@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "${api-endpoint}/profiles")
+@RequestMapping(path = "${api-endpoint}")
 public class ProfileController {
     
     ProfileService service;
@@ -20,25 +20,25 @@ public class ProfileController {
         this.service = service;
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Profile> show(@NonNull @PathVariable("id") Long id) throws Exception{
+    @GetMapping(path = "/user/profiles/{id}")
+    public ResponseEntity<Profile> getById(@NonNull @PathVariable("id") Long id) throws Exception{
         Profile profile = service.getById(id);
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(profile);
     }
 
-    @GetMapping(path = "/getByEmail/{email}")
-    public ResponseEntity<Profile> byEmail(@NonNull @PathVariable("email") String email)throws Exception{
+    @GetMapping(path = "/user/profiles/getByEmail/{email}")
+    public ResponseEntity<Profile> getByEmail(@NonNull @PathVariable("email") String email)throws Exception{
         Profile profile = service.getByEmail(email);
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(profile);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/user/profiles/{id}")
     public ResponseEntity<Profile> update(@PathVariable("id") Long id, @RequestBody ProfileDTO profileDTO) throws Exception{
         Profile profile = service.update(profileDTO, id);
         return ResponseEntity.accepted().body(profile);
     }
 
-    @PutMapping(path = "/update-favorites/{id}")
+    @PutMapping(path = "/user/profiles/update-favorites/{id}")
     public ResponseEntity<String> addRemoveFavorite(@PathVariable("id") Long id) throws Exception {
 
         String message = service.updateFavorites(id);
