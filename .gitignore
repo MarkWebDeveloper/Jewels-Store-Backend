@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Keys ###
+
+src/main/java/dev/mark/jewelsstorebackend/auth/keys/
+
 ### STS ###
 .apt_generated
 .classpath
