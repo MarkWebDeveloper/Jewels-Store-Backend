@@ -3,6 +3,10 @@ package dev.mark.jewelsstorebackend.profiles;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,8 +24,12 @@ public class ProfileController {
         this.service = service;
     }
 
+    @PostAuthorize("returnObject.body.id == authentication.principal.id")
     @GetMapping(path = "/user/profiles/getById/{id}")
     public ResponseEntity<Profile> getById(@NonNull @PathVariable("id") Long id) throws Exception{
+        // SecurityContext context = SecurityContextHolder.getContext();
+        // Authentication authentication = context.getAuthentication();
+        // authentication.getPrincipal().
         Profile profile = service.getById(id);
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(profile);
     }
