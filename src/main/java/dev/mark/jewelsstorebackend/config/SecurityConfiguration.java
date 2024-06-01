@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -38,7 +39,7 @@ import dev.mark.jewelsstorebackend.auth.JWTtoUserConverter;
 import dev.mark.jewelsstorebackend.auth.KeyUtils;
 import dev.mark.jewelsstorebackend.users.security.JpaUserDetailsService;
 
-
+@EnableMethodSecurity
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {

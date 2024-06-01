@@ -34,7 +34,6 @@ import lombok.Setter;
 public class Profile {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_profile")
     private Long id;
 

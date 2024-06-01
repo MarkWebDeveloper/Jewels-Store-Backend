@@ -2,13 +2,9 @@ package dev.mark.jewelsstorebackend.users.register;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import dev.mark.jewelsstorebackend.auth.SignUpDTO;
-import dev.mark.jewelsstorebackend.auth.TokenDTO;
 import dev.mark.jewelsstorebackend.auth.TokenGenerator;
 import dev.mark.jewelsstorebackend.encrypt.EncoderFacade;
 import dev.mark.jewelsstorebackend.profiles.Profile;
@@ -17,7 +13,6 @@ import dev.mark.jewelsstorebackend.roles.Role;
 import dev.mark.jewelsstorebackend.roles.RoleService;
 import dev.mark.jewelsstorebackend.users.User;
 import dev.mark.jewelsstorebackend.users.UserRepository;
-import dev.mark.jewelsstorebackend.users.security.SecurityUser;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -30,22 +25,26 @@ public class RegisterService {
     ProfileRepository profileRepository;
     TokenGenerator tokenGenerator;
 
-    public TokenDTO createUser(SignUpDTO signupDTO) {
+    public String createUser(SignUpDTO signupDTO) {
 
         User newUser = new User(signupDTO.getUsername(), signupDTO.getPassword()); 
 
+        System.out.println(newUser.getId());
+
         String passwordDecoded = encoder.decode("base64", newUser.getPassword());
-        System.out.println(passwordDecoded);
         String passwordEncoded = encoder.encode("bcrypt", passwordDecoded);
         
-
         newUser.setPassword(passwordEncoded);
         assignDefaultRole(newUser);
-        SecurityUser securityUser = new SecurityUser(newUser);
+
+        userRepository.save(newUser);
+
+        User savedUser = userRepository.getReferenceById(newUser.getId().toString());
 
         Profile newProfile = Profile.builder()
-                .user(newUser)
-                .email(newUser.getUsername())
+                .id(savedUser.getId())
+                .user(savedUser)
+                .email(savedUser.getUsername())
                 .firstName("")
                 .lastName("")
                 .address("")
@@ -55,15 +54,11 @@ public class RegisterService {
                 .province("")
                 .build();
 
-        userRepository.save(newUser);
-
         profileRepository.save(newProfile);
-        
-        Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(newUser, signupDTO.getPassword(), securityUser.getAuthorities());
-        
-        TokenDTO token = tokenGenerator.createToken(authentication);
 
-        return token;
+        String message = "User with the username " + newUser.getUsername() + " is successfully created.";
+
+        return message;
 
     }
 

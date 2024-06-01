@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController; 
   
     @RestController
-    @RequestMapping("/api/users") 
+    @RequestMapping("${api-endpoint}") 
     public class UserController { 
         @Autowired
         UserRepository userRepository; 
   
-        @GetMapping("/{id}") 
+        @GetMapping("user/getById/{id}")
         @PreAuthorize("#user.id == #id") 
         public ResponseEntity<UserDTO> user(@AuthenticationPrincipal User user, @PathVariable String id) { 
             return ResponseEntity.ok(UserDTO.from(userRepository.findById(id).orElseThrow())); 
-        } 
+        }
     } 

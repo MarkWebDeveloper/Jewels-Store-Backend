@@ -20,7 +20,7 @@ public class ProfileController {
         this.service = service;
     }
 
-    @GetMapping(path = "/user/profiles/{id}")
+    @GetMapping(path = "/user/profiles/getById/{id}")
     public ResponseEntity<Profile> getById(@NonNull @PathVariable("id") Long id) throws Exception{
         Profile profile = service.getById(id);
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(profile);

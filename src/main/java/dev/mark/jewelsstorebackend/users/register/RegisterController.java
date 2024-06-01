@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.mark.jewelsstorebackend.auth.SignUpDTO;
-import dev.mark.jewelsstorebackend.auth.TokenDTO;
 import dev.mark.jewelsstorebackend.auth.TokenGenerator;
 import lombok.AllArgsConstructor;
 
@@ -21,10 +20,10 @@ public class RegisterController {
     TokenGenerator tokenGenerator; 
   
     @PostMapping("/all/register") 
-    public ResponseEntity<TokenDTO> register(@RequestBody SignUpDTO signupDTO) { 
+    public ResponseEntity<String> register(@RequestBody SignUpDTO signupDTO) { 
 
-        TokenDTO token = service.createUser(signupDTO);
+        String message = service.createUser(signupDTO);
   
-        return ResponseEntity.ok(token); 
+        return ResponseEntity.ok(message); 
     }
 }
