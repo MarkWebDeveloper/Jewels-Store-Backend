@@ -52,6 +52,7 @@ public class ProfileService implements IGenericUpdateService<ProfileDTO, Profile
        return repository.save(profile);
     }
 
+    @PreAuthorize("hasRole('USER')")
     public String updateFavorites(Long productId) throws Exception {
         
         SecurityContext contextHolder = SecurityContextHolder.getContext();

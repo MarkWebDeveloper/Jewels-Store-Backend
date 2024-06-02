@@ -35,6 +35,7 @@ public class ProfileController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(profile);
     }
 
+    @PostAuthorize("returnObject.body.id == authentication.principal.id")
     @PutMapping(path = "/user/profiles/{id}")
     public ResponseEntity<Profile> update(@PathVariable("id") Long id, @RequestBody ProfileDTO profileDTO) throws Exception{
         Profile profile = service.update(profileDTO, id);
