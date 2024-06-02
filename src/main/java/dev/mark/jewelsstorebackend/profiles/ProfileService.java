@@ -3,6 +3,7 @@ package dev.mark.jewelsstorebackend.profiles;
 import java.util.Set;
 
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ public class ProfileService implements IGenericUpdateService<ProfileDTO, Profile
     ProfileRepository repository;
     ProductRepository productRepository;
 
+    @PreAuthorize("hasRole('USER')")
     public Profile getById(@NonNull Long id)throws Exception{
         Profile profile = repository.findById(id).orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
 
