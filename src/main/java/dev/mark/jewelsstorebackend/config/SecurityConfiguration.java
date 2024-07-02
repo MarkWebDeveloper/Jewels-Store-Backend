@@ -77,6 +77,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(endpoint + "/any/**").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers(endpoint + "/admin/**").hasRole("ADMIN")
                                 .requestMatchers(endpoint + "/user/**").hasRole("USER") 
+                                .requestMatchers(endpoint + "/imgs/**").permitAll()
                                 .anyRequest().authenticated() 
                 ) 
                 .userDetailsService(jpaUserDetailService)
