@@ -67,7 +67,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }
 
-    @PostMapping(path = "admin/products")
+    @PostMapping(path = "/admin/products")
     public ResponseEntity<Product> create(@RequestBody ProductDTO product) {
 
         Product newProduct = service.save(product);
@@ -75,7 +75,7 @@ public class ProductController {
         return ResponseEntity.status(201).body(newProduct);
     }
 
-    @PutMapping("admin/products/{id}")
+    @PutMapping("/admin/products/{id}")
     public ResponseEntity<Product> update(@PathVariable("id") @NonNull Long id, @RequestBody ProductDTO product) throws Exception {
 
         Product updatedProduct = service.update(id, product);
@@ -83,7 +83,7 @@ public class ProductController {
         return ResponseEntity.status(200).body(updatedProduct);
     }
 
-    @DeleteMapping(path = "admin/products/{id}")
+    @DeleteMapping(path = "/admin/products/{id}")
     public ResponseEntity<Message> remove(@PathVariable("id") @NonNull Long id) throws Exception { 
 
         Message delete = service.delete(id);
