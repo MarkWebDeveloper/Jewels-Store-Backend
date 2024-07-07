@@ -69,7 +69,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .formLogin(form -> form.disable())
                 .logout(out -> out
-                        .logoutUrl(endpoint + "/logout"))
+                        .logoutUrl(endpoint + "/all/logout"))
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                                 .requestMatchers("/error").permitAll()

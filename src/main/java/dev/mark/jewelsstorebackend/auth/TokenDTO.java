@@ -8,6 +8,7 @@ import lombok.Setter;
 public class TokenDTO { 
       
     private Long userId; 
+    private String roles;
     private String accessToken; 
     private String refreshToken;    
   

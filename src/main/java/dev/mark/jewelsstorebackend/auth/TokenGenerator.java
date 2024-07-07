@@ -1,10 +1,12 @@
 package dev.mark.jewelsstorebackend.auth;
 
+import java.text.MessageFormat;
 import java.time.Duration; 
 import java.time.Instant; 
 import java.time.temporal.ChronoUnit; 
 import org.springframework.beans.factory.annotation.Autowired; 
-import org.springframework.beans.factory.annotation.Qualifier; 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet; 
 import org.springframework.security.oauth2.jwt.JwtEncoder; 
@@ -25,13 +27,12 @@ public class TokenGenerator {
     JwtEncoder refreshTokenEncoder; 
       
     private String createAccessToken(Authentication authentication) { 
-        // User user = (User) authentication.getPrincipal(); 
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         System.out.println(securityUser);
         Instant now = Instant.now(); 
   
         JwtClaimsSet claimsSet = JwtClaimsSet.builder() 
-                .issuer("myApp") 
+                .issuer("JuliaJewelsStore") 
                 .issuedAt(now) 
                 .expiresAt(now.plus(5, ChronoUnit.MINUTES)) 
                 .subject(Long.toString(securityUser.getId())) 
@@ -41,12 +42,11 @@ public class TokenGenerator {
     } 
       
     private String createRefreshToken(Authentication authentication) { 
-        // User user = (User) authentication.getPrincipal(); 
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         Instant now = Instant.now(); 
   
         JwtClaimsSet claimsSet = JwtClaimsSet.builder() 
-                .issuer("myApp") 
+                .issuer("JuliaJewelsStore") 
                 .issuedAt(now) 
                 .expiresAt(now.plus(30, ChronoUnit.DAYS)) 
                 .subject(Long.toString(securityUser.getId())) 
@@ -55,16 +55,16 @@ public class TokenGenerator {
         return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue(); 
     } 
     public TokenDTO createToken(Authentication authentication) { 
-        // if (!(authentication.getPrincipal() instanceof User user)) { 
-        //     throw new BadCredentialsException( 
-        //             MessageFormat.format("principal {0} is not of User type", authentication.getPrincipal().getClass()) 
-        //     ); 
-        // } 
+        if (!(authentication.getPrincipal() instanceof SecurityUser securityUser)) { 
+            throw new BadCredentialsException( 
+                    MessageFormat.format("principal {0} is not of User type", authentication.getPrincipal().getClass()) 
+            ); 
+        } 
         System.out.println(authentication.getPrincipal());
-        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
   
         TokenDTO tokenDTO = new TokenDTO(); 
         tokenDTO.setUserId(securityUser.getId()); 
+        tokenDTO.setRoles(securityUser.getAuthorities().iterator().next().toString());
         tokenDTO.setAccessToken(createAccessToken(authentication)); 
   
         String refreshToken; 

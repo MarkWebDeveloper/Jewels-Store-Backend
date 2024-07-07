@@ -2,6 +2,7 @@ package dev.mark.jewelsstorebackend.users.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,6 +48,10 @@ public class SecurityUser implements UserDetails {
 
     public Long getId() {
         return user.getId();
+    }
+
+    public Set<Role> getRoles() {
+        return user.getRoles();
     }
 
     @Override
