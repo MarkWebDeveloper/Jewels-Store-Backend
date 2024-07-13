@@ -3,7 +3,9 @@ package dev.mark.jewelsstorebackend.auth;
 import java.text.MessageFormat;
 import java.time.Duration; 
 import java.time.Instant; 
-import java.time.temporal.ChronoUnit; 
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -32,10 +34,11 @@ public class TokenGenerator {
         Instant now = Instant.now(); 
   
         JwtClaimsSet claimsSet = JwtClaimsSet.builder() 
-                .issuer("JuliaJewelsStore") 
+                .issuer("http://localhost:8080") 
                 .issuedAt(now) 
                 .expiresAt(now.plus(5, ChronoUnit.MINUTES)) 
                 .subject(Long.toString(securityUser.getId())) 
+                .audience(Arrays.asList("JuliaJewelsApp"))
                 .build(); 
   
         return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue(); 
@@ -46,10 +49,11 @@ public class TokenGenerator {
         Instant now = Instant.now(); 
   
         JwtClaimsSet claimsSet = JwtClaimsSet.builder() 
-                .issuer("JuliaJewelsStore") 
+                .issuer("http://localhost:8080") 
                 .issuedAt(now) 
                 .expiresAt(now.plus(30, ChronoUnit.DAYS)) 
                 .subject(Long.toString(securityUser.getId())) 
+                .audience(Arrays.asList("JuliaJewelsApp"))
                 .build(); 
   
         return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue(); 
