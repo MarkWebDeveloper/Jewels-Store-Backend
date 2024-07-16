@@ -1,0 +1,7 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          audiences: http://localhost:8080
+          issuer-uri: JuliaJewelsApp

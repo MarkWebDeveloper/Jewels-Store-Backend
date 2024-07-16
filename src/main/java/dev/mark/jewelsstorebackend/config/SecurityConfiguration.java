@@ -1,6 +1,7 @@
 package dev.mark.jewelsstorebackend.config;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,8 +17,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimValidator;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
@@ -37,6 +43,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 
 import dev.mark.jewelsstorebackend.auth.JWTtoUserConverter;
 import dev.mark.jewelsstorebackend.auth.KeyUtils;
+import dev.mark.jewelsstorebackend.auth.ProblemDetailsAuthenticationEntryPoint;
 import dev.mark.jewelsstorebackend.users.security.JpaUserDetailsService;
 
 @EnableMethodSecurity
@@ -46,8 +53,17 @@ public class SecurityConfiguration {
     @Value("${api-endpoint}")
     String endpoint;
 
+    @Value("${jwt-issuer}") 
+    String issuer;
+
+    @Value("${jwt-audience}") 
+    String audience;
+
     @Autowired
     JWTtoUserConverter jwtToUserConverter; 
+
+    @Autowired
+    ProblemDetailsAuthenticationEntryPoint entryPoint;
 
     @Autowired
     KeyUtils keyUtils; 
@@ -55,10 +71,10 @@ public class SecurityConfiguration {
     @Autowired
     PasswordEncoder passwordEncoder; 
 
-    JpaUserDetailsService jpaUserDetailService;
+    JpaUserDetailsService jpaUserDetailsService;
 
-    public SecurityConfiguration(JpaUserDetailsService jpaUserDetailService) {
-        this.jpaUserDetailService = jpaUserDetailService;
+    public SecurityConfiguration(JpaUserDetailsService jpaUserDetailsService) {
+        this.jpaUserDetailsService = jpaUserDetailsService;
     }
 
     @Bean
@@ -80,10 +96,11 @@ public class SecurityConfiguration {
                                 .requestMatchers(endpoint + "/imgs/**").permitAll()
                                 .anyRequest().authenticated() 
                 ) 
-                .userDetailsService(jpaUserDetailService)
+                .userDetailsService(jpaUserDetailsService)
                 .httpBasic(basic -> basic.disable())
-                .oauth2ResourceServer((oauth2) -> 
-                        oauth2.jwt((jwt) -> jwt.jwtAuthenticationConverter(jwtToUserConverter)) 
+                .oauth2ResourceServer((oauth2) -> oauth2
+                        .authenticationEntryPoint(entryPoint)
+                        .jwt((jwt) -> jwt.jwtAuthenticationConverter(jwtToUserConverter)) 
                 )
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
                 .exceptionHandling((exceptions) -> exceptions 
@@ -99,7 +116,13 @@ public class SecurityConfiguration {
     @Bean
     @Primary
     JwtDecoder jwtAccessTokenDecoder() { 
-        return NimbusJwtDecoder.withPublicKey(keyUtils.getAccessTokenPublicKey()).build(); 
+        OAuth2TokenValidator<Jwt> defaults = JwtValidators.createDefaultWithIssuer(issuer);
+        OAuth2TokenValidator<Jwt> audiences = new JwtClaimValidator<List<String>>("aud",
+            (aud) -> aud != null && aud.contains(audience));
+        OAuth2TokenValidator<Jwt> all = new DelegatingOAuth2TokenValidator<>(defaults, audiences);
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withPublicKey(keyUtils.getAccessTokenPublicKey()).build();
+        jwtDecoder.setJwtValidator(all);
+        return jwtDecoder; 
     } 
   
     @Bean
@@ -118,6 +141,17 @@ public class SecurityConfiguration {
     JwtDecoder jwtRefreshTokenDecoder() { 
         return NimbusJwtDecoder.withPublicKey(keyUtils.getRefreshTokenPublicKey()).build(); 
     } 
+
+//     @Bean
+// JwtDecoder jwtDecoder(String issuer, String audience) {
+//     OAuth2TokenValidator<Jwt> defaults = JwtValidators.createDefaultWithIssuer(issuer);
+//     OAuth2TokenValidator<Jwt> audiences = new JwtClaimValidator<List<String>>("aud",
+//         (aud) -> aud != null && aud.contains(audience));
+//     OAuth2TokenValidator<Jwt> all = new DelegatingOAuth2TokenValidator<>(defaults, audiences);
+//     NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withIssuerLocation(issuer).build();
+//     jwtDecoder.setJwtValidator(all);
+//     return jwtDecoder;
+// }
   
     @Bean
     @Qualifier("jwtRefreshTokenEncoder") 
@@ -142,7 +176,7 @@ public class SecurityConfiguration {
     DaoAuthenticationProvider daoAuthenticationProvider() { 
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(); 
         provider.setPasswordEncoder(passwordEncoder); 
-        provider.setUserDetailsService(jpaUserDetailService); 
+        provider.setUserDetailsService(jpaUserDetailsService); 
         return provider; 
     }
 

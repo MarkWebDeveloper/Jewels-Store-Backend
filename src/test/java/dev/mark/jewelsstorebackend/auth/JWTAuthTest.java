@@ -49,7 +49,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 	"REFRESH_TOKEN_PRIVATE_KEY_PATH=src/main/java/dev/mark/jewelsstorebackend/auth/keys/refresh-token-private.key",
 	"REFRESH_TOKEN_PUBLIC_KEY_PATH=src/main/java/dev/mark/jewelsstorebackend/auth/keys/refresh-token-public.key",
     "STRIPE_PUBLIC_KEY=pk_test_123123",
-    "STRIPE_SECRET_KEY=sk_test_123123"
+    "STRIPE_SECRET_KEY=sk_test_123123",
+	"JWT-ISSUER=http://localhost:8080",
+	"JWT-AUDIENCE=JJ"
 })
 @AutoConfigureMockMvc
 public class JWTAuthTest {
@@ -62,7 +64,8 @@ public class JWTAuthTest {
 
 	@Test
 	void shouldNotAllowTokensWithAnInvalidAudience() throws Exception {
-		String token = mint((claims) -> claims.audience(List.of("https://wrong")));
+		String token = mint((claims) -> claims
+				.audience(List.of("https://wrong")));
 		this.mvc.perform(get("/user/getById/2").header("Authorization", "Bearer " + token))
 				.andExpect(status().isUnauthorized())
 				.andExpect(header().string("WWW-Authenticate", containsString("aud claim is not valid")));
@@ -108,71 +111,5 @@ public class JWTAuthTest {
 		JwtEncoderParameters parameters = JwtEncoderParameters.from(builder.build());
 		return this.jwtEncoder.encode(parameters).getTokenValue();
 	}
-
-
-	// @TestConfiguration
-	// static class TestJwtConfiguration {
-
-	// @Autowired
-    // KeyUtils keyUtils; 
-
-    // @Autowired
-    // PasswordEncoder passwordEncoder; 
-	
-	// JpaUserDetailsService jpaUserDetailService;
-
-	// @Autowired
-    // JWTtoUserConverter jwtToUserConverter; 
-
-	// @Bean
-    // @Primary
-    // JwtDecoder jwtAccessTokenDecoder() { 
-    //     return NimbusJwtDecoder.withPublicKey(keyUtils.getAccessTokenPublicKey()).build(); 
-    // } 
-  
-    // @Bean
-    // @Primary
-    // JwtEncoder jwtAccessTokenEncoder() { 
-    //     JWK jwk = new RSAKey 
-    //             .Builder(keyUtils.getAccessTokenPublicKey()) 
-    //             .privateKey(keyUtils.getAccessTokenPrivateKey()) 
-    //             .build(); 
-    //     JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk)); 
-    //     return new NimbusJwtEncoder(jwks); 
-    // } 
-  
-    // @Bean
-    // @Qualifier("jwtRefreshTokenDecoder") 
-    // JwtDecoder jwtRefreshTokenDecoder() { 
-    //     return NimbusJwtDecoder.withPublicKey(keyUtils.getRefreshTokenPublicKey()).build(); 
-    // } 
-  
-    // @Bean
-    // @Qualifier("jwtRefreshTokenEncoder") 
-    // JwtEncoder jwtRefreshTokenEncoder() { 
-    //     JWK jwk = new RSAKey 
-    //             .Builder(keyUtils.getRefreshTokenPublicKey()) 
-    //             .privateKey(keyUtils.getRefreshTokenPrivateKey()) 
-    //             .build(); 
-    //     JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk)); 
-    //     return new NimbusJwtEncoder(jwks); 
-    // } 
-  
-    // @Bean
-    // @Qualifier("jwtRefreshTokenAuthProvider") 
-    // JwtAuthenticationProvider jwtRefreshTokenAuthProvider() { 
-    //     JwtAuthenticationProvider provider = new JwtAuthenticationProvider(jwtRefreshTokenDecoder()); 
-    //     provider.setJwtAuthenticationConverter(jwtToUserConverter); 
-    //     return provider; 
-    // } 
-  
-    // @Bean
-    // DaoAuthenticationProvider daoAuthenticationProvider() { 
-    //     DaoAuthenticationProvider provider = new DaoAuthenticationProvider(); 
-    //     provider.setPasswordEncoder(passwordEncoder); 
-    //     provider.setUserDetailsService(jpaUserDetailService); 
-    //     return provider; 
-    // }
-	// }
 
 }
