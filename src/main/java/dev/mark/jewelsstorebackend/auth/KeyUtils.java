@@ -1,8 +1,5 @@
 package dev.mark.jewelsstorebackend.auth;
-
-import lombok.extern.slf4j.Slf4j; 
   
-import org.apache.juli.logging.Log; 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.beans.factory.annotation.Value; 
 import org.springframework.core.env.Environment; 
@@ -23,7 +20,6 @@ import java.util.Arrays;
 import java.util.Objects; 
   
 @Component
-@Slf4j
 public class KeyUtils { 
     @Autowired
     Environment environment; 

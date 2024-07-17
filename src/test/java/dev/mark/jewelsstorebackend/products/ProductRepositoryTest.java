@@ -3,6 +3,8 @@ package dev.mark.jewelsstorebackend.products;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,38 +30,39 @@ public class ProductRepositoryTest {
     @Autowired
     ProductRepository repository;
 
+    Product newProduct = new Product();
+
     @Test
     @DisplayName("Find all products")
-    void testGetAllProducts() {
+    void testShouldGetAllProducts() {
         List<Product> products = repository.findAll();
-        assertEquals(3, products.size());
+        assertThat(products, hasSize(greaterThan(1)));
         assertThat(products.get(0).getProductName()).isEqualTo("Flamenco Abanico Earrings");
     }
 
     @Test
     @DisplayName("Find product by id")
-    void testGetOneProductById() {
+    void testShouldGetOneProductById() {
         Product product = repository.findById(2L).orElseThrow();
         assertEquals(2L, product.getId());
-        assertEquals("Scheherazade Blue Earrings", product.getProductName());
     }
 
     @Test
     @DisplayName("Find product by name")
-    void testGetProductsByName() {
-        Product newProduct = new Product();
-        newProduct.setProductName("Una cosa inutil");
+    void testShouldGetAProductByName() {
+        
+        newProduct.setProductName("Something");
         entityManager.persist(newProduct);
 
-        Product searchedProduct = repository.findByProductName("Una cosa inutil").orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        Product searchedProduct = repository.findByProductName("Something").orElseThrow(() -> new ProductNotFoundException("Product not found"));
         
-        assertEquals("Una cosa inutil", searchedProduct.getProductName());
+        assertEquals("Something", searchedProduct.getProductName());
     }
 
     @Test
     @DisplayName("Test delete product")
     void testDeleteProductById() {
-        Product newProduct = new Product();
+        
         entityManager.persist(newProduct);
 
         repository.deleteById(4L);

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,15 +34,20 @@ public class ProductServiceTest {
     @Mock
     ProductFacade productFacade;
 
-    @BeforeEach
-    void setUp() {
-        this.service = new ProductService(repository, categoryRepository, productFacade);
+    Product earring;
+
+    Product necklace;
+
+    {
+        service = new ProductService(repository, categoryRepository, productFacade);
+
+        earring = Product.builder().productName("Earring").id(1L).build();
+
+        necklace = Product.builder().productName("Necklace").id(2L).build();
     }
 
     @Test
     void testGetAllProducts() {
-        Product earring = Product.builder().productName("Earring").id(1L).build();
-        Product necklace = Product.builder().productName("Necklace").id(2L).build();
 
         List<Product> products = new ArrayList<>();
         products.add(earring);
@@ -58,7 +62,6 @@ public class ProductServiceTest {
 
     @Test
     void testShouldReturnProductById() throws Exception {
-        Product earring = Product.builder().productName("Earring").id(1L).build();
         
         when(repository.findById(1L)).thenReturn(Optional.of(earring));
         Product product = service.getById(1L);
@@ -68,7 +71,6 @@ public class ProductServiceTest {
 
     @Test
     void testShouldReturnProductByName() throws Exception {
-        Product earring = Product.builder().productName("Earring").id(1L).build();
         
         when(repository.findByProductName("Earring")).thenReturn(Optional.of(earring));
         Product product = service.getByName("Earring");
