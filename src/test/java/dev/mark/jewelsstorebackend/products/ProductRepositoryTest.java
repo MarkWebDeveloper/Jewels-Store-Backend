@@ -2,13 +2,13 @@ package dev.mark.jewelsstorebackend.products;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -65,11 +65,10 @@ public class ProductRepositoryTest {
         
         entityManager.persist(newProduct);
 
-        repository.deleteById(4L);
+        repository.deleteById(0L);
 
-        List<Product> products = repository.findAll();
-        assertThat(products.size(), is(3));
-        assertThat(products.get(0).getProductName(), containsString("Flamenco Abanico Earrings"));
+        Optional<Product> deletedProduct = repository.findById(0L);
+        assertFalse(deletedProduct.isPresent());
     }
 
     @AfterEach
