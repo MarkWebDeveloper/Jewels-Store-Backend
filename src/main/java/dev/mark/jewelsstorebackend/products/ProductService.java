@@ -66,12 +66,12 @@ public class ProductService implements IGenericFullService<Product, ProductDTO>,
     @Override
     public Product save(@NonNull ProductDTO product) {
 
-        Category category = categoryRepository.findById(product.categoryId).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+        Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         
         Product newProduct = Product.builder()
-            .productName(product.productName)
-            .productDescription(product.productDescription)
-            .price(product.price)
+            .productName(product.getProductName())
+            .productDescription(product.getProductDescription())
+            .price(product.getPrice())
             .build();
 
         Set<Category> categories = new HashSet<>();
@@ -89,11 +89,11 @@ public class ProductService implements IGenericFullService<Product, ProductDTO>,
         
         Product updatingProduct = repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-        Category category = categoryRepository.findById(product.categoryId).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+        Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         
-        updatingProduct.setProductName(product.productName);
-        updatingProduct.setProductDescription(product.productDescription);
-        updatingProduct.setPrice(product.price);
+        updatingProduct.setProductName(product.getProductName());
+        updatingProduct.setProductDescription(product.getProductDescription());
+        updatingProduct.setPrice(product.getPrice());
 
         Set<Category> categories = new HashSet<>();
         categories.add(category);

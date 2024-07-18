@@ -93,7 +93,7 @@ public class ProductControllerTest {
     @DisplayName("Should return created product")
     void testPostProduct() throws Exception {
         ProductDTO statueDTO = new ProductDTO();
-        statueDTO.productName = "Statue";
+        statueDTO.setProductName("Statue");
 
         Product statue = new Product();
         statue.setId(1L);

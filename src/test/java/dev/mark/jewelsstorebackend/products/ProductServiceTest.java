@@ -3,7 +3,11 @@ package dev.mark.jewelsstorebackend.products;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -41,6 +45,8 @@ public class ProductServiceTest {
 
     Product necklace;
 
+    Category earringsCategory;
+
     Set<Category> earringCategories;
 
     {
@@ -48,7 +54,7 @@ public class ProductServiceTest {
         earring = Product.builder().productName("Earring").id(1L).build();
         necklace = Product.builder().productName("Necklace").id(2L).build();
 
-        Category earringsCategory = Category.builder().categoryName("Earrings").build();
+        earringsCategory = Category.builder().categoryName("Earrings").id(1L).build();
         earringCategories = new HashSet<>();
         earringCategories.add(earringsCategory);
     }
@@ -115,6 +121,32 @@ public class ProductServiceTest {
         List<Product> result = productService.getManyByCategoryName("earRings");
 
         assertThat(result, contains(earring, earring2));
+    }
+
+    @Test
+    void testShouldSaveNewProduct() throws Exception {
+
+        ProductDTO testProductDTO = ProductDTO.builder()
+            .productName("Test product")
+            .productDescription("A test product")
+            .price(2000L)
+            .categoryId(1L)
+            .build();
+
+        when(categoryRepository.findById(testProductDTO.getCategoryId())).thenReturn(Optional.of(earringsCategory));
+        Product testProduct = testProductDTO.toProduct(categoryRepository);
+        when(productRepository.save(any(Product.class))).thenReturn(testProduct);
+
+
+        Product savedProduct = productService.save(testProductDTO);
+
+        productService.save(testProductDTO);
+
+        assertNotNull(savedProduct);
+        assertEquals(testProductDTO.getProductName(), savedProduct.getProductName());
+        assertEquals(testProductDTO.getProductDescription(), savedProduct.getProductDescription());
+        assertEquals(testProductDTO.getPrice(), savedProduct.getPrice());
+        assertTrue(savedProduct.getCategories().contains(earringsCategory));
     }
 
 }
