@@ -18,8 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.mysql.cj.protocol.ExportControlled;
-
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
 import dev.mark.jewelsstorebackend.products.facades.ProductFacade;
@@ -28,10 +26,10 @@ import dev.mark.jewelsstorebackend.products.facades.ProductFacade;
 public class ProductServiceTest {
 
     @InjectMocks
-    ProductService service;
+    ProductService productService;
 
     @Mock
-    ProductRepository repository;
+    ProductRepository productRepository;
 
     @Mock
     CategoryRepository categoryRepository;
@@ -43,12 +41,16 @@ public class ProductServiceTest {
 
     Product necklace;
 
+    Set<Category> earringCategories;
+
     {
-        service = new ProductService(repository, categoryRepository, productFacade);
-
+        productService = new ProductService(productRepository, categoryRepository, productFacade);
         earring = Product.builder().productName("Earring").id(1L).build();
-
         necklace = Product.builder().productName("Necklace").id(2L).build();
+
+        Category earringsCategory = Category.builder().categoryName("Earrings").build();
+        earringCategories = new HashSet<>();
+        earringCategories.add(earringsCategory);
     }
 
     @Test
@@ -58,8 +60,8 @@ public class ProductServiceTest {
         products.add(earring);
         products.add(necklace);
 
-        when(repository.findAll()).thenReturn(products);
-        List<Product> result = service.getAll();
+        when(productRepository.findAll()).thenReturn(products);
+        List<Product> result = productService.getAll();
 
         assertThat(result, contains(earring, necklace));
 
@@ -68,8 +70,8 @@ public class ProductServiceTest {
     @Test
     void testShouldReturnProductById() throws Exception {
         
-        when(repository.findById(1L)).thenReturn(Optional.of(earring));
-        Product product = service.getById(1L);
+        when(productRepository.findById(1L)).thenReturn(Optional.of(earring));
+        Product product = productService.getById(1L);
 
         assertThat(product, is(earring));
     }
@@ -77,8 +79,8 @@ public class ProductServiceTest {
     @Test
     void testShouldReturnProductByName() throws Exception {
         
-        when(repository.findByProductName("Earring")).thenReturn(Optional.of(earring));
-        Product product = service.getByName("Earring");
+        when(productRepository.findByProductName("Earring")).thenReturn(Optional.of(earring));
+        Product product = productService.getByName("Earring");
 
         assertThat(product, is(earring));
     }
@@ -86,35 +88,31 @@ public class ProductServiceTest {
     @Test
     void testShouldReturnProductNotFound() {
         
-        when(repository.findById(1L)).thenThrow(new ProductException("Product not found"));
-        ProductException exception = assertThrows(ProductException.class, () -> service.getById(1L));
+        when(productRepository.findById(1L)).thenThrow(new ProductException("Product not found"));
+        ProductException exception = assertThrows(ProductException.class, () -> productService.getById(1L));
 
         String actualMessage = exception.getMessage();
         String expectedMessage = "Product not found";
 
         assertThat(actualMessage, is(expectedMessage));
         assertThat(actualMessage.contains(expectedMessage), is(true));
-
     }
 
     @Test
     void testShouldGetManyByCategoryName() throws Exception {
-        Product earring2 = Product.builder().productName("Earring2").id(3L).build();
-        Category earringsCategory = new Category();
-        earringsCategory.setCategoryName("Earrings");
-        Set<Category> categories = new HashSet<>();
-        categories.add(earringsCategory);
 
-        earring.setCategories(categories);
-        earring2.setCategories(categories);
+        Product earring2 = Product.builder().productName("Earring2").id(3L).build();
+
+        earring.setCategories(earringCategories);
+        earring2.setCategories(earringCategories);
 
         List<Product> products = new ArrayList<>();
         products.add(earring);
         products.add(earring2);
 
-        when(repository.findProductsByCategoryNameIgnoreCase("earRings")).thenReturn(Optional.of(products));
+        when(productRepository.findProductsByCategoryNameIgnoreCase("earRings")).thenReturn(Optional.of(products));
 
-        List<Product> result = service.getManyByCategoryName("earRings");
+        List<Product> result = productService.getManyByCategoryName("earRings");
 
         assertThat(result, contains(earring, earring2));
     }
