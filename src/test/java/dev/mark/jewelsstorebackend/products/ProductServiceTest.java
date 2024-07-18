@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +18,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.mysql.cj.protocol.ExportControlled;
+
+import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
 import dev.mark.jewelsstorebackend.products.facades.ProductFacade;
 
@@ -90,6 +95,28 @@ public class ProductServiceTest {
         assertThat(actualMessage, is(expectedMessage));
         assertThat(actualMessage.contains(expectedMessage), is(true));
 
+    }
+
+    @Test
+    void testShouldGetManyByCategoryName() throws Exception {
+        Product earring2 = Product.builder().productName("Earring2").id(3L).build();
+        Category earringsCategory = new Category();
+        earringsCategory.setCategoryName("Earrings");
+        Set<Category> categories = new HashSet<>();
+        categories.add(earringsCategory);
+
+        earring.setCategories(categories);
+        earring2.setCategories(categories);
+
+        List<Product> products = new ArrayList<>();
+        products.add(earring);
+        products.add(earring2);
+
+        when(repository.findProductsByCategoryNameIgnoreCase("earRings")).thenReturn(Optional.of(products));
+
+        List<Product> result = service.getManyByCategoryName("earRings");
+
+        assertThat(result, contains(earring, earring2));
     }
 
 }
