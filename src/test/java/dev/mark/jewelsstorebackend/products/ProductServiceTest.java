@@ -49,6 +49,12 @@ public class ProductServiceTest {
 
     Set<Category> earringCategories;
 
+    Category necklacesCategory;
+
+    Set<Category> necklacesCategories;
+
+    ProductDTO testProductDTO;
+
     {
         productService = new ProductService(productRepository, categoryRepository, productFacade);
         earring = Product.builder().productName("Earring").id(1L).build();
@@ -57,6 +63,17 @@ public class ProductServiceTest {
         earringsCategory = Category.builder().categoryName("Earrings").id(1L).build();
         earringCategories = new HashSet<>();
         earringCategories.add(earringsCategory);
+
+        necklacesCategory = Category.builder().categoryName("Necklaces").id(2L).build();
+        necklacesCategories = new HashSet<>();
+        necklacesCategories.add(necklacesCategory);
+
+        testProductDTO = ProductDTO.builder()
+            .productName("Test product")
+            .productDescription("A test product")
+            .price(2000L)
+            .categoryId(1L)
+            .build();
     }
 
     @Test
@@ -126,17 +143,9 @@ public class ProductServiceTest {
     @Test
     void testShouldSaveNewProduct() throws Exception {
 
-        ProductDTO testProductDTO = ProductDTO.builder()
-            .productName("Test product")
-            .productDescription("A test product")
-            .price(2000L)
-            .categoryId(1L)
-            .build();
-
         when(categoryRepository.findById(testProductDTO.getCategoryId())).thenReturn(Optional.of(earringsCategory));
         Product testProduct = testProductDTO.toProduct(categoryRepository);
         when(productRepository.save(any(Product.class))).thenReturn(testProduct);
-
 
         Product savedProduct = productService.save(testProductDTO);
 
@@ -147,6 +156,27 @@ public class ProductServiceTest {
         assertEquals(testProductDTO.getProductDescription(), savedProduct.getProductDescription());
         assertEquals(testProductDTO.getPrice(), savedProduct.getPrice());
         assertTrue(savedProduct.getCategories().contains(earringsCategory));
+    }
+
+    @Test
+    void testShouldUpdateExistingProduct() throws Exception {
+
+        Product originalProduct = necklace;
+        var originalProductId = 1L;
+        ProductDTO updatingProductDTO = testProductDTO;
+
+        when(productRepository.findById(originalProductId)).thenReturn(Optional.of(originalProduct));
+        when(categoryRepository.findById(updatingProductDTO.getCategoryId())).thenReturn(Optional.of(earringsCategory));
+        Product transformedProduct = updatingProductDTO.toProduct(categoryRepository);
+        when(productRepository.save(any(Product.class))).thenReturn(transformedProduct);
+
+        Product updatedProduct = productService.update(originalProductId, updatingProductDTO);
+
+        assertNotNull(updatedProduct);
+        assertEquals(updatingProductDTO.getProductName(), updatedProduct.getProductName());
+        assertEquals(updatingProductDTO.getProductDescription(), updatedProduct.getProductDescription());
+        assertEquals(updatingProductDTO.getPrice(), updatedProduct.getPrice());
+        assertTrue(updatedProduct.getCategories().contains(earringsCategory));
     }
 
 }

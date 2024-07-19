@@ -89,9 +89,9 @@ public class ProductService implements IGenericFullService<Product, ProductDTO>,
 
         updatingProduct.setCategories(categories);
 
-        repository.save(updatingProduct);
+        Product updatedProduct = repository.save(updatingProduct);
         
-        return updatingProduct;
+        return updatedProduct;
     }
 
     @Override
