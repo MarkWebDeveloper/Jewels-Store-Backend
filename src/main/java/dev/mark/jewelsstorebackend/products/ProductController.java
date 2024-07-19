@@ -68,7 +68,7 @@ public class ProductController {
     }
 
     @PostMapping(path = "/admin/products")
-    public ResponseEntity<Product> create(@RequestBody ProductDTO product) {
+    public ResponseEntity<Product> create(@RequestBody ProductDTO product) throws Exception {
 
         Product newProduct = service.save(product);
 

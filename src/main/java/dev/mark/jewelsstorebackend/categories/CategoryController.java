@@ -50,7 +50,7 @@ public class CategoryController {
     }
 
     @PostMapping(path = "/admin/categories")
-    public ResponseEntity<Category> create(@RequestBody CategoryDTO category) {
+    public ResponseEntity<Category> create(@RequestBody CategoryDTO category) throws Exception {
 
         Category newCategory = service.save(category);
 

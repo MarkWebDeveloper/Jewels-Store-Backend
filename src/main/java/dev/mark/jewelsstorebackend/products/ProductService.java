@@ -64,20 +64,9 @@ public class ProductService implements IGenericFullService<Product, ProductDTO>,
     }
 
     @Override
-    public Product save(@NonNull ProductDTO product) {
-
-        Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+    public Product save(@NonNull ProductDTO productDTO) throws Exception {
         
-        Product newProduct = Product.builder()
-            .productName(product.getProductName())
-            .productDescription(product.getProductDescription())
-            .price(product.getPrice())
-            .build();
-
-        Set<Category> categories = new HashSet<>();
-        categories.add(category);
-
-        newProduct.setCategories(categories);
+        Product newProduct = productDTO.toProduct(categoryRepository);
 
         repository.save(newProduct);
 
