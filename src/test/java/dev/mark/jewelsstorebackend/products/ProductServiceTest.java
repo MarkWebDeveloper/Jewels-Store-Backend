@@ -24,6 +24,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
+import dev.mark.jewelsstorebackend.images.Image;
+import dev.mark.jewelsstorebackend.messages.Message;
 import dev.mark.jewelsstorebackend.products.facades.ProductFacade;
 
 @ExtendWith(MockitoExtension.class)
@@ -177,6 +179,26 @@ public class ProductServiceTest {
         assertEquals(updatingProductDTO.getProductDescription(), updatedProduct.getProductDescription());
         assertEquals(updatingProductDTO.getPrice(), updatedProduct.getPrice());
         assertTrue(updatedProduct.getCategories().contains(earringsCategory));
+    }
+
+    @Test
+    void testShouldReturnMessageAboutDeletingProduct() throws Exception {
+
+        Product product = earring;
+        Image image = new Image();
+        image.setImageName("test-product-image.jpg");
+        Set<Image> images = new HashSet<>();
+        images.add(image);
+        product.setImages(images);
+
+        when(productFacade.delete("image", product.getId())).thenReturn("Images with names [test-product-image.jpg] are deleted successfully");
+        when(productFacade.delete("product", product.getId())).thenReturn("Product Earrings is deleted successfully.");
+
+        Message resultingMessage = productService.delete(product.getId());
+        Message expectedMessage = new Message();
+        expectedMessage.createMessage("Product Earrings is deleted successfully. Images with names [test-product-image.jpg] are deleted successfully");
+
+        assertThat(resultingMessage.getMessage(), is(expectedMessage.getMessage()));
     }
 
 }
