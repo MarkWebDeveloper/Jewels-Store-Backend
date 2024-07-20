@@ -14,7 +14,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -38,7 +37,6 @@ public class ProductRepositoryTest {
     Product newProduct = new Product();
 
     @Test
-    @DisplayName("Repository test: Should find all products")
     void testShouldGetAllProducts() {
         List<Product> products = repository.findAll();
         assertThat(products, hasSize(greaterThan(1)));
@@ -46,14 +44,12 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    @DisplayName("Repository test: Should find product by id")
     void testShouldGetOneProductById() {
         Product product = repository.findById(2L).orElseThrow();
         assertEquals(2L, product.getId());
     }
 
     @Test
-    @DisplayName("Repository test: Should find product by name")
     void testShouldGetAProductByName() {
         
         newProduct.setProductName("Something");
@@ -65,7 +61,6 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    @DisplayName("Repository test: Should delete product by ID")
     void testDeleteProductById() {
 
         repository.deleteById(1L);
@@ -75,7 +70,6 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    @DisplayName("Repository test: Find all by product name containing a string and ignore case")
     void testShouldGetProductsByNameContainingAndIgnoreCase() {
 
         newProduct.setProductName("SDRGFZX");
@@ -87,7 +81,6 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    @DisplayName("Repository test: Find all by category name and ignore case")
     void testShouldGetProductByNameAndIgnoreCase() {
 
         Category newCategory = new Category();
@@ -105,6 +98,20 @@ public class ProductRepositoryTest {
         List<Product> foundProducts = repository.findProductsByCategoryNameIgnoreCase("SdRGFZx").orElseThrow();
         assertThat(foundProducts, hasSize(equalTo(1)));
         assertThat(foundProducts.get(0).getCategories()).contains(newCategory);
+    }
+
+    @Test
+    void testShouldSaveAndReturnNewProduct() {
+
+        newProduct.setProductName("Test name");
+        newProduct.setPrice(3000L);
+        Product savedProduct = repository.save(newProduct);
+
+        Product searcheProduct = repository.findByProductName("Test name").orElseThrow(() -> new ProductNotFoundException("Product not found"));
+
+        assertEquals(savedProduct.getProductName(), newProduct.getProductName());
+        assertEquals(savedProduct.getPrice(), newProduct.getPrice());
+        assertEquals(savedProduct.getProductName(), searcheProduct.getProductName());
     }
 
     @AfterEach
