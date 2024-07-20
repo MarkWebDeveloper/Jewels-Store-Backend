@@ -14,7 +14,9 @@ import org.springframework.test.context.TestPropertySource;
 	"REFRESH_TOKEN_PRIVATE_KEY_PATH=src/main/java/dev/mark/jewelsstorebackend/auth/keys/refresh-token-private.key",
 	"REFRESH_TOKEN_PUBLIC_KEY_PATH=src/main/java/dev/mark/jewelsstorebackend/auth/keys/refresh-token-public.key",
     "STRIPE_PUBLIC_KEY=pk_test_123123",
-    "STRIPE_SECRET_KEY=sk_test_123123"
+    "STRIPE_SECRET_KEY=sk_test_123123",
+	"JWT-ISSUER=http://localhost:8080",
+    "JWT-AUDIENCE=JuliaJewelsApp"
 })
 class JewelsStoreBackendApplicationTests {
 

@@ -107,11 +107,25 @@ public class ProductRepositoryTest {
         newProduct.setPrice(3000L);
         Product savedProduct = repository.save(newProduct);
 
-        Product searcheProduct = repository.findByProductName("Test name").orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        Product searchedProduct = repository.findByProductName("Test name").orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         assertEquals(savedProduct.getProductName(), newProduct.getProductName());
         assertEquals(savedProduct.getPrice(), newProduct.getPrice());
-        assertEquals(savedProduct.getProductName(), searcheProduct.getProductName());
+        assertEquals(savedProduct.getProductName(), searchedProduct.getProductName());
+    }
+
+    @Test
+    void testShouldDeleteAnExistingProduct() {
+
+        newProduct.setProductName("Test name");
+        newProduct.setPrice(3000L);
+        entityManager.persist(newProduct);
+
+        repository.delete(newProduct);
+
+        Optional<Product> deletedProduct = repository.findByProductName("Test name");
+        
+        assertFalse(deletedProduct.isPresent());
     }
 
     @AfterEach
