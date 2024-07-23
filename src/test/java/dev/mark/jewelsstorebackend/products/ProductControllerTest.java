@@ -14,16 +14,21 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import dev.mark.jewelsstorebackend.users.UserRepository;
 
 // Doc: https://docs.spring.io/spring-framework/docs/6.0.2/reference/html/testing.html#spring-mvc-test-framework
 
@@ -39,6 +44,9 @@ public class ProductControllerTest {
 
     @MockBean
     ProductService service;
+
+    @MockBean
+    UserRepository userRepository;
 
     @Test
     @DisplayName("Should return a list of products")
@@ -58,7 +66,7 @@ public class ProductControllerTest {
         products.add(toy);
 
         when(service.getAll()).thenReturn(products);
-        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/products")
+        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/all/products")
                 .accept(MediaType.APPLICATION_JSON)
                 .content("application/json"))
                 .andExpect(status().isOk())
@@ -73,13 +81,13 @@ public class ProductControllerTest {
 
     @Test
     @DisplayName("Should return product with id 1")
-    void testShowMethode() throws Exception {
+    void testShowMethod() throws Exception {
         Product statueDTO = new Product();
         statueDTO.setId(1L);
         statueDTO.setProductName("Statue");
 
         when(service.getById(1L)).thenReturn(statueDTO);
-        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/products/{id}", 1L)
+        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/all/products/{id}", 1L)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -102,7 +110,7 @@ public class ProductControllerTest {
         String json = mapper.writeValueAsString(statueDTO); 
 
         when(service.save(statueDTO)).thenReturn(statue);
-        MockHttpServletResponse response = mockMvc.perform(post("/api/v1/products")
+        MockHttpServletResponse response = mockMvc.perform(post("/api/v1/admin/products")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .characterEncoding("utf-8")
