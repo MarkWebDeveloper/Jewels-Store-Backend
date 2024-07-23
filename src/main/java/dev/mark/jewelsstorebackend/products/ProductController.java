@@ -3,6 +3,7 @@ package dev.mark.jewelsstorebackend.products;
 import java.util.List;
 
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -72,7 +73,7 @@ public class ProductController {
 
         Product newProduct = service.save(product);
 
-        return ResponseEntity.status(201).body(newProduct);
+        return ResponseEntity.status(201).contentType(MediaType.APPLICATION_JSON).body(newProduct);
     }
 
     @PutMapping("/admin/products/{id}")
@@ -86,9 +87,9 @@ public class ProductController {
     @DeleteMapping(path = "/admin/products/{id}")
     public ResponseEntity<Message> remove(@PathVariable("id") @NonNull Long id) throws Exception { 
 
-        Message delete = service.delete(id);
+        Message deleteMessage = service.delete(id);
 
-        return ResponseEntity.status(200).body(delete);
+        return ResponseEntity.status(200).body(deleteMessage);
     }
 
 }
