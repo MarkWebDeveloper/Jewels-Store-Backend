@@ -14,9 +14,9 @@ public class PaymentService {
     StripeConfiguration stripeConfig;
     PaymentFacade paymentFacade;
 
-    public PaymentResponse createPaymentIntent(String paymentProvider, PaymentRequest payment) throws StripeException {
+    public PaymentResponse createPaymentIntent(String paymentProvider, Cart cart) throws StripeException {
 
-        PaymentResponse response = paymentFacade.createPaymentIntent("stripe", payment);
+        PaymentResponse response = paymentFacade.createPaymentIntent("stripe", cart);
 
         return response;
     }

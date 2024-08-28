@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentRequest {
+public class Cart {
     PaymentItem[] items;
 }

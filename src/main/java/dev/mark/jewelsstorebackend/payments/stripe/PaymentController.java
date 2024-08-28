@@ -18,9 +18,9 @@ public class PaymentController {
     PaymentService service;
 
     @PostMapping(path = "/create-payment-intent/{paymentProvider}")
-    public ResponseEntity<PaymentResponse> create(@PathVariable("paymentProvider") String paymentProvider, @RequestBody PaymentRequest payment) throws StripeException {
+    public ResponseEntity<PaymentResponse> create(@PathVariable("paymentProvider") String paymentProvider, @RequestBody Cart cart) throws StripeException {
 
-        PaymentResponse response = service.createPaymentIntent(paymentProvider, payment);
+        PaymentResponse response = service.createPaymentIntent(paymentProvider, cart);
 
         return ResponseEntity.status(201).body(response);
     }
