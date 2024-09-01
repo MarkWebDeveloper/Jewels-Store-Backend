@@ -54,6 +54,13 @@ INSERT INTO images (id_image, image_name, is_main_image) VALUES (default, 'place
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 1);
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 2);
 INSERT INTO images (id_image, image_name, is_main_image, product_id, category_id) VALUES (default, 'esmeralda-earrings.png', true, 3, 1);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 4);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 5);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'esmeralda-earrings.png', true, 6);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 7);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 8);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'esmeralda-earrings.png', true, 9);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 10);
 
 
 /*Categories images*/
