@@ -64,26 +64,26 @@ public class ProductControllerTest {
         toy.setProductName("Toy");
     }
 
-    // @Test
-    // void testShouldGetAllAndReturnOk() throws JsonProcessingException, Exception {
+    @Test
+    void testShouldGetAllAndReturnOk() throws JsonProcessingException, Exception {
 
-    //     List<Product> products = new ArrayList<>();
-    //     products.add(statue);
-    //     products.add(toy);
+        List<Product> products = new ArrayList<>();
+        products.add(statue);
+        products.add(toy);
 
-    //     when(service.getAll()).thenReturn(products);
-    //     MockHttpServletResponse response = mockMvc.perform(get("/api/v1/all/products")
-    //             .accept(MediaType.APPLICATION_JSON)
-    //             .content("application/json"))
-    //             .andExpect(status().isOk())
-    //             .andReturn()
-    //             .getResponse();
+        when(service.getAll()).thenReturn(products);
+        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/all/products")
+                .accept(MediaType.APPLICATION_JSON)
+                .content("application/json"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
 
-    //     assertThat(response.getStatus(), is(HttpStatus.OK.value()));
-    //     assertThat(response.getContentAsString(), containsString("Statue"));
-    //     assertThat(response.getContentAsString(), containsString("Toy"));
-    //     assertThat(response.getContentAsString(), equalTo(mapper.writeValueAsString(products)));
-    // }
+        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
+        assertThat(response.getContentAsString(), containsString("Statue"));
+        assertThat(response.getContentAsString(), containsString("Toy"));
+        assertThat(response.getContentAsString(), equalTo(mapper.writeValueAsString(products)));
+    }
 
     @Test
     void testShouldGetByIdAndReturnOk() throws Exception {

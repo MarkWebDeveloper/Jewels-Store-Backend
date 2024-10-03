@@ -32,6 +32,14 @@ public class ProductService implements IGenericProductService<Product, ProductDT
     }
 
     @Override
+    public List<Product> getAll() {
+
+        List<Product> products = repository.findAll();
+        
+        return products;
+    }
+
+    @Override
     public List<Product> getAll(Integer size, Integer page) {
 
         Pageable pageable = PageRequest.of(page, size);
