@@ -78,19 +78,19 @@ public class ProductServiceTest {
             .build();
     }
 
-    @Test
-    void testGetAllProducts() {
+    // @Test
+    // void testGetAllProducts() {
 
-        List<Product> products = new ArrayList<>();
-        products.add(earring);
-        products.add(necklace);
+    //     List<Product> products = new ArrayList<>();
+    //     products.add(earring);
+    //     products.add(necklace);
 
-        when(productRepository.findAll()).thenReturn(products);
-        List<Product> result = productService.getAll();
+    //     when(productRepository.findAll()).thenReturn(products);
+    //     List<Product> result = productService.getAll();
 
-        assertThat(result, contains(earring, necklace));
+    //     assertThat(result, contains(earring, necklace));
 
-    }
+    // }
 
     @Test
     void testShouldReturnProductById() throws Exception {

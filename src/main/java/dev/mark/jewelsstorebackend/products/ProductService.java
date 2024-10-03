@@ -4,19 +4,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.categories.CategoryNotFoundException;
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
-import dev.mark.jewelsstorebackend.interfaces.IGenericFullService;
-import dev.mark.jewelsstorebackend.interfaces.IGenericSearchService;
+import dev.mark.jewelsstorebackend.interfaces.IGenericProductService;
 import dev.mark.jewelsstorebackend.messages.Message;
 import dev.mark.jewelsstorebackend.products.facades.ProductFacade;
 
 @Service
-public class ProductService implements IGenericFullService<Product, ProductDTO>, IGenericSearchService<Product> {
+public class ProductService implements IGenericProductService<Product, ProductDTO>{
 
     ProductRepository repository;
     CategoryRepository categoryRepository;
@@ -30,9 +32,11 @@ public class ProductService implements IGenericFullService<Product, ProductDTO>,
     }
 
     @Override
-    public List<Product> getAll() {
-        List<Product> countries = repository.findAll();
-        return countries;
+    public List<Product> getAll(Integer size, Integer page) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> pageProduct = repository.findAll(pageable);
+        return pageProduct.getContent();
     }
 
     @Override

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.mark.jewelsstorebackend.interfaces.IGenericFullService;
-import dev.mark.jewelsstorebackend.interfaces.IGenericSearchService;
+import dev.mark.jewelsstorebackend.interfaces.IGenericProductService;
 import dev.mark.jewelsstorebackend.messages.Message;
 import lombok.AllArgsConstructor;
 
@@ -25,13 +25,12 @@ import lombok.AllArgsConstructor;
 @RequestMapping(path = "${api-endpoint}")
 public class ProductController {
 
-    IGenericFullService<Product, ProductDTO> service;
-    IGenericSearchService<Product> searchService;
+    IGenericProductService<Product, ProductDTO> service;
 
     @GetMapping(path = "/all/products")
-    public List<Product> index() {
+    public List<Product> index(@RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "page", defaultValue = "0") Integer page) {
 
-        List<Product> products = service.getAll();
+        List<Product> products = service.getAll(size, page);
 
         return products;
     }
@@ -55,7 +54,7 @@ public class ProductController {
     @GetMapping(path = "/all/products/getManyByName/{name}")
     public ResponseEntity<List<Product>> findManyByName(@PathVariable("name") @NonNull String name) throws Exception {
 
-        List<Product> products = searchService.getManyByName(name);
+        List<Product> products = service.getManyByName(name);
 
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }
@@ -63,7 +62,7 @@ public class ProductController {
     @GetMapping(path = "/all/products/getManyByCategoryName/{name}")
     public ResponseEntity<List<Product>> findManyByCategoryName(@PathVariable("name") @NonNull String name) throws Exception {
 
-        List<Product> products = searchService.getManyByCategoryName(name);
+        List<Product> products = service.getManyByCategoryName(name);
 
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }
