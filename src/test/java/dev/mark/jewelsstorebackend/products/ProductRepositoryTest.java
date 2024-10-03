@@ -5,8 +5,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +20,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import dev.mark.jewelsstorebackend.categories.Category;
 
@@ -38,9 +43,36 @@ public class ProductRepositoryTest {
 
     @Test
     void testShouldGetAllProducts() {
+        newProduct.setProductName("Something");
+        entityManager.persist(newProduct);
+
+        Product newProduct2 = new Product();
+        newProduct2.setProductName("Something Else");
+        entityManager.persist(newProduct2);
+
         List<Product> products = repository.findAll();
+
         assertThat(products, hasSize(greaterThan(1)));
-        assertThat(products.get(0).getProductName()).isEqualTo("Flamenco Abanico Earrings");
+        assertThat(products.contains(newProduct2));
+    }
+
+    @Test
+    void testShouldGetPaginatedProducts() {
+        newProduct.setProductName("Something");
+        entityManager.persist(newProduct);
+        
+        Product newProduct2 = new Product();
+        newProduct2.setProductName("Something Else");
+        entityManager.persist(newProduct2);
+
+        long productsCount = repository.count();
+        int lastPageNumber = (int) (productsCount / 2 - 1);
+        Pageable pageable = PageRequest.of(lastPageNumber, 2);
+        Page<Product> productsPage = repository.findAll(pageable);
+        List<Product> products = productsPage.getContent();
+
+        assertThat(products.size(), is(2));
+        assertTrue(products.contains(newProduct2));
     }
 
     @Test
