@@ -21,6 +21,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
@@ -90,6 +93,33 @@ public class ProductServiceTest {
 
         assertThat(result, contains(earring, necklace));
 
+    }
+
+    @Test
+    void testGetPaginatedProducts() {
+
+        List<Product> products = new ArrayList<>();
+        products.add(earring);
+        products.add(necklace);
+
+        Page<Product> page1 = new PageImpl<>(products);
+
+        PageRequest pageable1 = PageRequest.of(0, 2);
+
+        when(productRepository.findAll(pageable1)).thenReturn(page1);
+        List<Product> result = productService.getAll(2, 0);
+
+        assertThat(result, is(page1.getContent()));
+        assertTrue(result.contains(earring));
+    }
+
+    @Test
+    void testCountAllProducts() {
+
+        when(productRepository.count()).thenReturn(10L);
+        Long productsCount = productService.countAll();
+
+        assertThat(productsCount, is(10L));
     }
 
     @Test
