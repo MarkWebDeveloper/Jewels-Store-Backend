@@ -8,6 +8,7 @@ import dev.mark.jewelsstorebackend.messages.Message;
 public interface IGenericProductService<T, DTO> extends IGenericGetService<T>{
     List<T> getAll();
     List<T> getAll(Integer size, Integer page);
+    Long countAll();
     T getByName(String name) throws Exception;
     List<T> getManyByName(String name) throws Exception;
     List<T> getManyByCategoryName(String name) throws Exception;

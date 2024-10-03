@@ -35,7 +35,7 @@ public class ProductService implements IGenericProductService<Product, ProductDT
     public List<Product> getAll() {
 
         List<Product> products = repository.findAll();
-        
+
         return products;
     }
 
@@ -45,6 +45,14 @@ public class ProductService implements IGenericProductService<Product, ProductDT
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> pageProduct = repository.findAll(pageable);
         return pageProduct.getContent();
+    }
+
+    @Override
+    public Long countAll() {
+
+        Long productsCount = repository.count();
+        
+        return productsCount;
     }
 
     @Override

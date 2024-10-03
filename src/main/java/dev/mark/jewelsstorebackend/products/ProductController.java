@@ -35,6 +35,12 @@ public class ProductController {
         return products;
     }
 
+    @GetMapping(path = "/all/productsCount") 
+    public Long countAll() {
+        Long productsCount = service.countAll();
+        return productsCount;
+    }
+
     @GetMapping(path = "/all/products/{id}")
     public ResponseEntity<Product> findById(@PathVariable("id") @NonNull Long id) throws Exception {
 
