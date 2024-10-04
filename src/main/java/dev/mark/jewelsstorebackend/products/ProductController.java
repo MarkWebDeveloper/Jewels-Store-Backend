@@ -35,7 +35,7 @@ public class ProductController {
         return products;
     }
 
-    @GetMapping(path = "/all/productsCount") 
+    @GetMapping(path = "/all/products/count") 
     public Long countAll() {
         Long productsCount = service.countAll();
         return productsCount;
