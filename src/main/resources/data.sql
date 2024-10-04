@@ -32,7 +32,7 @@ INSERT INTO categories (id_category, category_name) VALUES (default, 'Studs');
 
 /*Products*/
 
-/*Category 1*/
+/*Category Earrings*/
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Flamenco Abanico Earrings', 'Passionate design inspired by flamenco dancers fans', 1999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Scheherazade Blue Earrings', 'Magical earrings for your evening dress', 2999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Esmeralda Earrings', 'Beatiful green earrings Esmeralda', 2999);
@@ -43,6 +43,18 @@ INSERT INTO products (id_product, product_name, product_description, price) VALU
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Scheherazade Blue Earrings', 'Magical earrings for your evening dress', 2999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Esmeralda Earrings', 'Beatiful green earrings Esmeralda', 2999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Flamenco Abanico Earrings', 'Passionate design inspired by flamenco dancers fans', 1999);
+
+/*Category Necklaces*/
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 1', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 2', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 3', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 4', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 5', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 6', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 7', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 8', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 9', 'Super Necklace', 1999);
+INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 10', 'Super Necklace', 1999);
 
 /*Images*/
 
@@ -50,7 +62,7 @@ INSERT INTO products (id_product, product_name, product_description, price) VALU
 
 INSERT INTO images (id_image, image_name, is_main_image) VALUES (default, 'placeholder-image.jpg', true);
 
-/*Proucts images*/
+/*Earrings images*/
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 1);
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'scheherazade-blue-earrings.png', true, 2);
 INSERT INTO images (id_image, image_name, is_main_image, product_id, category_id) VALUES (default, 'esmeralda-earrings.png', true, 3, 1);
@@ -62,6 +74,17 @@ INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (def
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'esmeralda-earrings.png', true, 9);
 INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'flamenco-fan-earrings.png', true, 10);
 
+/*Necklaces images*/
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 11);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 12);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 13);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 14);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 15);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 16);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 17);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 18);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 19);
+INSERT INTO images (id_image, image_name, is_main_image, product_id) VALUES (default, 'blue-necklace.png', true, 20);
 
 /*Categories images*/
 
@@ -71,6 +94,8 @@ INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (de
 INSERT INTO images (id_image, image_name, is_main_image, category_id) VALUES (default, 'ring-and-earrings-category.png', true, 4);
 
 /*Categories-Products*/
+
+/*Earrings*/
 
 INSERT INTO categories_products (product_id, category_id) VALUES (1, 1);
 INSERT INTO categories_products (product_id, category_id) VALUES (2, 1);
@@ -82,3 +107,16 @@ INSERT INTO categories_products (product_id, category_id) VALUES (7, 1);
 INSERT INTO categories_products (product_id, category_id) VALUES (8, 1);
 INSERT INTO categories_products (product_id, category_id) VALUES (9, 1);
 INSERT INTO categories_products (product_id, category_id) VALUES (10, 1);
+
+/*Necklaces*/
+
+INSERT INTO categories_products (product_id, category_id) VALUES (11, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (12, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (13, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (14, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (15, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (16, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (17, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (18, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (19, 2);
+INSERT INTO categories_products (product_id, category_id) VALUES (20, 2);
