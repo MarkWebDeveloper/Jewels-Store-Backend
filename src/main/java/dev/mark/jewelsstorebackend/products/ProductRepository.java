@@ -18,4 +18,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("SELECT p FROM Product p JOIN p.categories c WHERE LOWER(c.categoryName) = LOWER(:categoryName)")
     public Optional <Page<Product>> findProductsByCategoryNameIgnoreCase(@Param("categoryName") String categoryName, Pageable pageable);
 
+    @Query("SELECT COUNT(p) FROM Product p JOIN p.categories c WHERE LOWER(c.categoryName) = LOWER(:categoryName)")
+    Long countProductsByCategoryNameIgnoreCase(@Param("categoryName") String categoryName);
+
 }

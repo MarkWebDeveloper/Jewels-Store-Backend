@@ -84,6 +84,14 @@ public class ProductService implements IGenericProductService<Product, ProductDT
     }
 
     @Override
+    public Long countByCategoryName(String name) {
+
+        Long productsCount = repository.countProductsByCategoryNameIgnoreCase(name);
+        
+        return productsCount;
+    }
+
+    @Override
     public Product save(@NonNull ProductDTO productDTO) throws Exception {
         
         Product newProduct = productDTO.toProduct(categoryRepository);

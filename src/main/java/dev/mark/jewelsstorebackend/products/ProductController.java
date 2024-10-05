@@ -73,6 +73,12 @@ public class ProductController {
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }
 
+    @GetMapping(path = "/all/products/countByCategory/{name}") 
+    public Long countByCategory(@PathVariable("name") @NonNull String name) {
+        Long productsCount = service.countByCategoryName(name);
+        return productsCount;
+    }
+
     @PostMapping(path = "/admin/products")
     public ResponseEntity<Product> create(@RequestBody ProductDTO product) throws Exception {
 
