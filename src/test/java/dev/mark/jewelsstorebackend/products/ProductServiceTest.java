@@ -103,7 +103,6 @@ public class ProductServiceTest {
         products.add(necklace);
 
         Page<Product> page1 = new PageImpl<>(products);
-
         PageRequest pageable1 = PageRequest.of(0, 2);
 
         when(productRepository.findAll(pageable1)).thenReturn(page1);
@@ -165,9 +164,12 @@ public class ProductServiceTest {
         products.add(earring);
         products.add(earring2);
 
-        when(productRepository.findProductsByCategoryNameIgnoreCase("earRings")).thenReturn(Optional.of(products));
+        Page<Product> page = new PageImpl<>(products);
+        PageRequest pageable = PageRequest.of(0, 2);
 
-        List<Product> result = productService.getManyByCategoryName("earRings");
+        when(productRepository.findProductsByCategoryNameIgnoreCase("earRings", pageable)).thenReturn(Optional.of(page));
+
+        List<Product> result = productService.getManyByCategoryName("earRings", 2, 0);
 
         assertThat(result, contains(earring, earring2));
     }

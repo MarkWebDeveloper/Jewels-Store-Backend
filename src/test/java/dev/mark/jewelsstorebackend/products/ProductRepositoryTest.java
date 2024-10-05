@@ -127,7 +127,10 @@ public class ProductRepositoryTest {
 
         entityManager.persist(newProduct);
 
-        List<Product> foundProducts = repository.findProductsByCategoryNameIgnoreCase("SdRGFZx").orElseThrow();
+        Pageable pageable = PageRequest.of(0, 2);
+
+        Page<Product> foundProductsPage = repository.findProductsByCategoryNameIgnoreCase("SdRGFZx", pageable).orElseThrow();
+        List<Product> foundProducts = foundProductsPage.getContent();
         assertThat(foundProducts, hasSize(equalTo(1)));
         assertThat(foundProducts.get(0).getCategories()).contains(newCategory);
     }

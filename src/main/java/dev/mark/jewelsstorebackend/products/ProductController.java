@@ -66,9 +66,9 @@ public class ProductController {
     }
 
     @GetMapping(path = "/all/products/getManyByCategoryName/{name}")
-    public ResponseEntity<List<Product>> findManyByCategoryName(@PathVariable("name") @NonNull String name) throws Exception {
+    public ResponseEntity<List<Product>> findManyByCategoryName(@PathVariable("name") @NonNull String name, @RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "page", defaultValue = "0") Integer page) throws Exception {
 
-        List<Product> products = service.getManyByCategoryName(name);
+        List<Product> products = service.getManyByCategoryName(name, size, page);
 
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(products);
     }

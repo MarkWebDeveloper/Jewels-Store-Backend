@@ -11,7 +11,7 @@ public interface IGenericProductService<T, DTO> extends IGenericGetService<T>{
     Long countAll();
     T getByName(String name) throws Exception;
     List<T> getManyByName(String name) throws Exception;
-    List<T> getManyByCategoryName(String name) throws Exception;
+    List<T> getManyByCategoryName(String name, Integer size, Integer page) throws Exception;
     public T save(DTO obj) throws Exception;
     public T update(@NonNull Long id, DTO obj) throws Exception;
     public Message delete (@NonNull Long id) throws Exception;
