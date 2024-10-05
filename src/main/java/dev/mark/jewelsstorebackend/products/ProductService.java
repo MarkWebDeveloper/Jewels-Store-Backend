@@ -40,7 +40,7 @@ public class ProductService implements IGenericProductService<Product, ProductDT
     }
 
     @Override
-    public List<Product> getAll(Integer size, Integer page) {
+    public List<Product> getAll(Integer page, Integer size) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> pageProduct = repository.findAll(pageable);
@@ -77,7 +77,7 @@ public class ProductService implements IGenericProductService<Product, ProductDT
     }
 
     @Override
-    public List<Product> getManyByCategoryName(String name, Integer size, Integer page) throws Exception {
+    public List<Product> getManyByCategoryName(String name, Integer page, Integer size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> pageProduct = repository.findProductsByCategoryNameIgnoreCase(name, pageable).orElseThrow(() -> new ProductNotFoundException("Product not found"));
         return pageProduct.getContent();

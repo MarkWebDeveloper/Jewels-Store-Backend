@@ -71,8 +71,8 @@ public class ProductControllerTest {
         products.add(statue);
         products.add(toy);
 
-        when(service.getAll()).thenReturn(products);
-        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/all/products")
+        when(service.getAll(0, 4)).thenReturn(products);
+        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/all/products?size=4&page=0")
                 .accept(MediaType.APPLICATION_JSON)
                 .content("application/json"))
                 .andExpect(status().isOk())

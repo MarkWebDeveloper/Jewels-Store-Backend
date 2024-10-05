@@ -106,7 +106,7 @@ public class ProductServiceTest {
         PageRequest pageable1 = PageRequest.of(0, 2);
 
         when(productRepository.findAll(pageable1)).thenReturn(page1);
-        List<Product> result = productService.getAll(2, 0);
+        List<Product> result = productService.getAll(0, 2);
 
         assertThat(result, is(page1.getContent()));
         assertTrue(result.contains(earring));
@@ -169,7 +169,7 @@ public class ProductServiceTest {
 
         when(productRepository.findProductsByCategoryNameIgnoreCase("earRings", pageable)).thenReturn(Optional.of(page));
 
-        List<Product> result = productService.getManyByCategoryName("earRings", 2, 0);
+        List<Product> result = productService.getManyByCategoryName("earRings", 0, 2);
 
         assertThat(result, contains(earring, earring2));
     }

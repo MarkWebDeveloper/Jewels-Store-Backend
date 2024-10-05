@@ -28,9 +28,9 @@ public class ProductController {
     IGenericProductService<Product, ProductDTO> service;
 
     @GetMapping(path = "/all/products")
-    public List<Product> index(@RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "page", defaultValue = "0") Integer page) {
+    public List<Product> index(@RequestParam(name = "page", defaultValue = "0") Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size) {
 
-        List<Product> products = service.getAll(size, page);
+        List<Product> products = service.getAll(page, size);
 
         return products;
     }
@@ -66,7 +66,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/all/products/getManyByCategoryName/{name}")
-    public ResponseEntity<List<Product>> findManyByCategoryName(@PathVariable("name") @NonNull String name, @RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "page", defaultValue = "0") Integer page) throws Exception {
+    public ResponseEntity<List<Product>> findManyByCategoryName(@PathVariable("name") @NonNull String name, @RequestParam(name = "page", defaultValue = "0") Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size) throws Exception {
 
         List<Product> products = service.getManyByCategoryName(name, size, page);
 
