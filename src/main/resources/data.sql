@@ -14,13 +14,19 @@ INSERT INTO role_users (role_id, user_id) VALUES (1, 1);
 INSERT INTO role_users (role_id, user_id) VALUES (2, 2);
 INSERT INTO role_users (role_id, user_id) VALUES (2, 3);
 
+/*Carts*/
+
+INSERT INTO carts(id_cart) VALUES (default);
+INSERT INTO carts(id_cart) VALUES (default);
+INSERT INTO carts(id_cart) VALUES (default);
+
 /*Profiles*/
 
-INSERT INTO profiles(id_profile, user_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(1, 1, 'admin', 'Juan', 'apellidos1', 'direccion1', 'city1', 'province1', '88888', '12312323');
+INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(1, 1, 1, 'admin', 'Juan', 'apellidos1', 'direccion1', 'city1', 'province1', '88888', '12312323');
 
-INSERT INTO profiles(id_profile, user_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(2, 2, 'user1', 'Mark', 'apellidos2', 'direccion2', 'city2', 'province2', '11111', '32132132');
+INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(2, 2, 2, 'user1', 'Mark', 'apellidos2', 'direccion2', 'city2', 'province2', '11111', '32132132');
 
-INSERT INTO profiles(id_profile, user_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(3, 3, 'user2', 'Nico', 'apellidos3', 'direccion3', 'city3', 'province3', '22222', '21212111');
+INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(3, 3, 3, 'user2', 'Nico', 'apellidos3', 'direccion3', 'city3', 'province3', '22222', '21212111');
 
 /*Categories*/
 
@@ -55,6 +61,11 @@ INSERT INTO products (id_product, product_name, product_description, price) VALU
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 8', 'Super Necklace', 1999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 9', 'Super Necklace', 1999);
 INSERT INTO products (id_product, product_name, product_description, price) VALUES (default, 'Necklace 10', 'Super Necklace', 1999);
+
+/*Cart items*/
+INSERT INTO cart_items (id_cart_item, product_id, quantity, cart_id) VALUES (default, 1, 1, 1);
+INSERT INTO cart_items (id_cart_item, product_id, quantity, cart_id) VALUES (default, 1, 1, 2);
+INSERT INTO cart_items (id_cart_item, product_id, quantity, cart_id) VALUES (default, 1, 1, 3);
 
 /*Images*/
 

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import dev.mark.jewelsstorebackend.cart.Cart;
 import dev.mark.jewelsstorebackend.products.Product;
 import dev.mark.jewelsstorebackend.users.User;
 import jakarta.persistence.CascadeType;
@@ -39,6 +40,10 @@ public class Profile {
     @JoinColumn(name = "user_id", referencedColumnName = "id_user")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     private String email;
     private String firstName;

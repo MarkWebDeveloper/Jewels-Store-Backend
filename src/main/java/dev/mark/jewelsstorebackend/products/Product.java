@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import dev.mark.jewelsstorebackend.cart.CartItem;
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.images.Image;
 import dev.mark.jewelsstorebackend.profiles.Profile;
@@ -57,6 +58,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Image> images;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<CartItem> cartItems;
 
     @Column
     private Long price;
