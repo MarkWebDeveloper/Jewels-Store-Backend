@@ -2,15 +2,25 @@ package dev.mark.jewelsstorebackend.cart.item;
 
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+
+import dev.mark.jewelsstorebackend.products.Product;
+import dev.mark.jewelsstorebackend.products.ProductRepository;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class CartItemService {
-    CartItemRepository repository;
 
-    public CartItem getById(@NonNull Long id)throws Exception{
+    CartItemRepository cartRepository;
+    ProductRepository productRepository;
 
-        return repository.findById(id).orElseThrow(() -> new CartItemNotFoundException("Cart item not found"));
+    public CartItem getById(@NonNull Long id) {
+
+        return cartRepository.findById(id).orElseThrow(() -> new CartItemNotFoundException("Cart item not found"));
+    }
+
+    public CartItem save(@NonNull Product product, @NonNull Long quantity) {
+
+        return CartItem.builder().id(product.getId()).product(product).quantity(quantity).build();
     }
 }
