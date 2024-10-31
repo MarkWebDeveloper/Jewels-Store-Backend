@@ -22,11 +22,11 @@ INSERT INTO carts(id_cart) VALUES (default);
 
 /*Profiles*/
 
-INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(1, 1, 1, 'admin', 'Juan', 'apellidos1', 'direccion1', 'city1', 'province1', '88888', '12312323');
+INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(1, 1, 1, 'admin@gmail.com', 'Juan', 'apellidos1', 'direccion1', 'city1', 'province1', '88888', '12312323');
 
-INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(2, 2, 2, 'user1', 'Mark', 'apellidos2', 'direccion2', 'city2', 'province2', '11111', '32132132');
+INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(2, 2, 2, 'user1@gmail.com', 'Mark', 'apellidos2', 'direccion2', 'city2', 'province2', '11111', '32132132');
 
-INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(3, 3, 3, 'user2', 'Nico', 'apellidos3', 'direccion3', 'city3', 'province3', '22222', '21212111');
+INSERT INTO profiles(id_profile, user_id, cart_id, email, first_Name, last_Name, address, postal_Code, city, province, number_Phone) VALUES(3, 3, 3, 'user2@gmail.com', 'Nico', 'apellidos3', 'direccion3', 'city3', 'province3', '22222', '21212111');
 
 /*Categories*/
 

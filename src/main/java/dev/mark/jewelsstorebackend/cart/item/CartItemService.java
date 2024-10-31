@@ -21,6 +21,6 @@ public class CartItemService {
 
     public CartItem save(@NonNull Product product, @NonNull Long quantity) {
 
-        return CartItem.builder().id(product.getId()).product(product).quantity(quantity).build();
+        return CartItem.builder().product(product).quantity(quantity).build();
     }
 }
