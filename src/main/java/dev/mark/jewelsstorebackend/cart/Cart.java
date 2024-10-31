@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import java.util.List;
 
+import dev.mark.jewelsstorebackend.cart.item.CartItem;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 

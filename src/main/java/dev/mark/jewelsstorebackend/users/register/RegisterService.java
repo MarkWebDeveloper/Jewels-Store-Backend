@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import dev.mark.jewelsstorebackend.auth.SignUpDTO;
 import dev.mark.jewelsstorebackend.auth.TokenGenerator;
+import dev.mark.jewelsstorebackend.cart.Cart;
+import dev.mark.jewelsstorebackend.cart.CartRepository;
 import dev.mark.jewelsstorebackend.encrypt.EncoderFacade;
 import dev.mark.jewelsstorebackend.profiles.Profile;
 import dev.mark.jewelsstorebackend.profiles.ProfileRepository;
@@ -20,9 +22,10 @@ import lombok.AllArgsConstructor;
 public class RegisterService {
 
     UserRepository userRepository;
+    ProfileRepository profileRepository;
+    CartRepository cartRepository;
     RoleService roleService;
     EncoderFacade encoder;
-    ProfileRepository profileRepository;
     TokenGenerator tokenGenerator;
 
     public String createUser(SignUpDTO signupDTO) {
@@ -41,6 +44,8 @@ public class RegisterService {
 
         User savedUser = userRepository.getReferenceById(newUser.getId().toString());
 
+        Cart newCart = Cart.builder().id(savedUser.getId()).build();
+
         Profile newProfile = Profile.builder()
                 .id(savedUser.getId())
                 .user(savedUser)
@@ -52,6 +57,7 @@ public class RegisterService {
                 .numberPhone("")
                 .city("")
                 .province("")
+                .cart(cartRepository.save(newCart))
                 .build();
 
         profileRepository.save(newProfile);

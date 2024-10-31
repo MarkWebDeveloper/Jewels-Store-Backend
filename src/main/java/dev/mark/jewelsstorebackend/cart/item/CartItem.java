@@ -1,7 +1,8 @@
-package dev.mark.jewelsstorebackend.cart;
+package dev.mark.jewelsstorebackend.cart.item;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import dev.mark.jewelsstorebackend.cart.Cart;
 import dev.mark.jewelsstorebackend.products.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

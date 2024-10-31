@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import dev.mark.jewelsstorebackend.cart.CartItem;
+import dev.mark.jewelsstorebackend.cart.item.CartItem;
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.images.Image;
 import dev.mark.jewelsstorebackend.profiles.Profile;
