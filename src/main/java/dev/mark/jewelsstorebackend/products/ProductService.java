@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import dev.mark.jewelsstorebackend.categories.Category;
 import dev.mark.jewelsstorebackend.categories.CategoryNotFoundException;
 import dev.mark.jewelsstorebackend.categories.CategoryRepository;
-import dev.mark.jewelsstorebackend.interfaces.IGenericProductService;
 import dev.mark.jewelsstorebackend.messages.Message;
 import dev.mark.jewelsstorebackend.products.facades.ProductFacade;
 

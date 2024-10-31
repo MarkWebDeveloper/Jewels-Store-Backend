@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import dev.mark.jewelsstorebackend.config.StorageProperties;
 import dev.mark.jewelsstorebackend.images.Image;
 import dev.mark.jewelsstorebackend.images.ImageRepository;
-import dev.mark.jewelsstorebackend.interfaces.IDelete;
 import dev.mark.jewelsstorebackend.products.Product;
 import dev.mark.jewelsstorebackend.products.ProductNotFoundException;
 import dev.mark.jewelsstorebackend.products.ProductRepository;

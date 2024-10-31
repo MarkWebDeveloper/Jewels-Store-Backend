@@ -2,7 +2,6 @@ package dev.mark.jewelsstorebackend.products.facades;
 
 import org.springframework.stereotype.Component;
 
-import dev.mark.jewelsstorebackend.interfaces.IDelete;
 import dev.mark.jewelsstorebackend.products.Product;
 import dev.mark.jewelsstorebackend.products.ProductNotFoundException;
 import dev.mark.jewelsstorebackend.products.ProductRepository;

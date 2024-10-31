@@ -1,4 +1,4 @@
-package dev.mark.jewelsstorebackend.interfaces;
+package dev.mark.jewelsstorebackend.products;
 
 import java.util.List;
 

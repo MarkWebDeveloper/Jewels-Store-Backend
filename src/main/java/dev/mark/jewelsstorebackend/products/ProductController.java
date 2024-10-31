@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.mark.jewelsstorebackend.interfaces.IGenericProductService;
 import dev.mark.jewelsstorebackend.messages.Message;
 import lombok.AllArgsConstructor;
 
