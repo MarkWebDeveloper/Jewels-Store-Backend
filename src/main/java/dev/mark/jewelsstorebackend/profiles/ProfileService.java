@@ -9,8 +9,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import dev.mark.jewelsstorebackend.interfaces.IGenericGetService;
-import dev.mark.jewelsstorebackend.interfaces.IGenericUpdateService;
 import dev.mark.jewelsstorebackend.products.Product;
 import dev.mark.jewelsstorebackend.products.ProductNotFoundException;
 import dev.mark.jewelsstorebackend.products.ProductRepository;
@@ -18,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class ProfileService implements IGenericUpdateService<ProfileDTO, Profile>, IGenericGetService<Profile> {
+public class ProfileService implements IGenericProfileService<Profile> {
 
     ProfileRepository repository;
     ProductRepository productRepository;

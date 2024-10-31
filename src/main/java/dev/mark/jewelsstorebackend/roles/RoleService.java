@@ -2,11 +2,10 @@ package dev.mark.jewelsstorebackend.roles;
 
 import org.springframework.stereotype.Service;
 
-import dev.mark.jewelsstorebackend.interfaces.IGenericGetService;
 import io.micrometer.common.lang.NonNull;
 
 @Service
-public class RoleService implements IGenericGetService<Role>{
+public class RoleService {
     
     RoleRepository repository;
 

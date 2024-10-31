@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.lang.NonNull;
 import dev.mark.jewelsstorebackend.messages.Message;
 
-public interface IGenericProductService<T, DTO> extends IGenericGetService<T>{
+public interface IGenericProductService<T, DTO> {
     List<T> getAll();
     List<T> getAll(Integer page, Integer size);
     Long countAll();
+    T getById(@NonNull Long id) throws Exception;
     T getByName(String name) throws Exception;
     List<T> getManyByName(String name) throws Exception;
     List<T> getManyByCategoryName(String name, Integer page, Integer size) throws Exception;

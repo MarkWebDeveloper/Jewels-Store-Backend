@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "${api-endpoint}")
 public class ProfileController {
     
-    ProfileService service;
+    IGenericProfileService<Profile> service;
 
     public ProfileController(ProfileService service) {
         this.service = service;

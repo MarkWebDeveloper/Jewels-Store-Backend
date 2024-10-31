@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.mark.jewelsstorebackend.interfaces.IGenericFullService;
 import dev.mark.jewelsstorebackend.messages.Message;
 import lombok.AllArgsConstructor;
 
@@ -23,7 +22,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping(path = "${api-endpoint}")
 public class CategoryController {
 
-    IGenericFullService<Category, CategoryDTO> service;
+    IGenericCategoryService<Category, CategoryDTO> service;
 
     @GetMapping(path = "/all/categories")
     public List<Category> index() {
