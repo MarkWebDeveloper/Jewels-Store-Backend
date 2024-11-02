@@ -37,7 +37,6 @@ public class CartService implements IGenericCartService<Cart> {
 
         SecurityContext contextHolder = SecurityContextHolder.getContext();
         Authentication auth = contextHolder.getAuthentication();
-        // System.out.println(auth.getName());
         
         Profile updatingProfile = profileRepository.findByEmail(auth.getName()).orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product not found"));

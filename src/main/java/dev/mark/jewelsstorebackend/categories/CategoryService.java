@@ -71,7 +71,7 @@ public class CategoryService implements IGenericCategoryService<Category, Catego
 
         Message message = new Message();
 
-        message.createMessage("Category with the name '" + categoryName + "' is deleted from the categorys table");
+        message.createMessage("Category with the name '" + categoryName + "' is deleted from the categories table");
 
         return message;
     }
