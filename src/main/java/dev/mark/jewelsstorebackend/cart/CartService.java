@@ -30,7 +30,7 @@ public class CartService implements IGenericCartService<Cart> {
     ProductRepository productRepository;
     CartItemService cartItemService;
 
-    public Cart getById(@NonNull Long id)throws Exception{
+    public Cart getById(@NonNull Long id) {
         Cart cart = cartRepository.findById(id).orElseThrow(() -> new CartNotFoundException("Profile not found"));
 
         return cart;
