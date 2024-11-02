@@ -1,10 +1,14 @@
 package dev.mark.jewelsstorebackend.cart;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import dev.mark.jewelsstorebackend.messages.Message;
 
 @RestController
 @RequestMapping(path = "${api-endpoint}")
@@ -17,10 +21,18 @@ public class CartController {
     }
 
     @PutMapping(path = "/user/cart/addToCart/{id}/{quantity}")
-    public ResponseEntity<Cart> addItem(@PathVariable("id") Long id, @PathVariable("quantity") Long quantity) throws Exception {
+    public ResponseEntity<Cart> addItem(@PathVariable("id") Long id, @PathVariable("quantity") Long quantity) {
 
         Cart cart = service.addToCart(id, quantity);
 
         return ResponseEntity.status(200).body(cart);
+    }
+
+    @DeleteMapping(path = "/user/cart/removeFromCart/{id}")
+    public ResponseEntity<Message> remove(@PathVariable("id") @NonNull Long id) { 
+
+        Message message = service.removeFromCart(id);
+
+        return ResponseEntity.status(200).body(message);
     }
 }

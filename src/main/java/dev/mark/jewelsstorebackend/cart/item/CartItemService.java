@@ -3,6 +3,7 @@ package dev.mark.jewelsstorebackend.cart.item;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import dev.mark.jewelsstorebackend.cart.Cart;
 import dev.mark.jewelsstorebackend.messages.Message;
 import dev.mark.jewelsstorebackend.products.Product;
 import dev.mark.jewelsstorebackend.products.ProductRepository;
@@ -20,9 +21,9 @@ public class CartItemService {
         return cartItemRepository.findById(id).orElseThrow(() -> new CartItemNotFoundException("Cart item not found"));
     }
 
-    public CartItem save(@NonNull Product product, @NonNull Long quantity) {
+    public CartItem save(@NonNull Product product, @NonNull Long quantity, Cart cart) {
 
-        CartItem newCartItem = CartItem.builder().product(product).quantity(quantity).build();
+        CartItem newCartItem = CartItem.builder().product(product).quantity(quantity).cart(cart).build();
 
         return cartItemRepository.save(newCartItem);
     }
