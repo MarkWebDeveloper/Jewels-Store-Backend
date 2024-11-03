@@ -27,7 +27,7 @@ public class CartTest {
     }
 
     @Test
-    void test_cart_has_id_and_cartItems() {
+    void test_cartHasIdAndCartItems() {
         assertThat(cart.getId(), is(1L));
         assertThat(cart.getCartItems().get(0).getProduct().getProductName(), is("Product1"));
     }
