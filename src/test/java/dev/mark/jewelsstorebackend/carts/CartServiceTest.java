@@ -66,12 +66,12 @@ public class CartServiceTest {
 
     private MockedStatic<SecurityUtils> mockedSecurityUtils;
 
-    private Cart cart;
-    private Product product1;
-    private Product product2;
-    CartItem cartItem1;
-    CartItem cartItem2;
-    Profile profile;
+    private final Cart cart;
+    private final Product product1;
+    private final Product product2;
+    private final CartItem cartItem1;
+    private final CartItem cartItem2;
+    private final Profile profile;
 
     {
         product1 = Product.builder().id(1L).productName("Product1").build();
